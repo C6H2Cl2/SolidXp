@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "side": "solidxp:blocks/xpStorage_Side",
+        "top": "solidxp:blocks/xpStorage_Top",
+        "bottom": "solidxp:blocks/xpStorage_Bottom"
+    }
+}
