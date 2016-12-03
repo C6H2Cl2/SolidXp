@@ -3,9 +3,6 @@ package c6h2cl2.mod.SolidXp.Util
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 
-/**
- * Created by C6H2Cl2 on 2016/08/29.
- */
 class LevelableToolUtil {
     public fun appendTagToStack(itemStack: ItemStack) :ItemStack {
         val stackTagCompound = itemStack.tagCompound
