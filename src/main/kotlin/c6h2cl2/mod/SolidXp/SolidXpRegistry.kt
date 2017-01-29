@@ -5,7 +5,6 @@ import c6h2cl2.mod.SolidXp.Event.XpDropBoostEventHandler
 import c6h2cl2.mod.SolidXp.Item.*
 import c6h2cl2.mod.SolidXp.Item.Tool.*
 import c6h2cl2.mod.SolidXp.Util.RecipeUtil
-import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnumEnchantmentType
@@ -110,8 +109,8 @@ object SolidXpRegistry {
                 GameRegistry.addShapelessRecipe(SolidXpRegistry.solidXps[i], SolidXpRegistry.solidXps[i - 1], SolidXpRegistry.solidXps[i - 1], SolidXpRegistry.solidXps[i - 1], SolidXpRegistry.solidXps[i - 1])
             }
             if (i != 15) {
-                val itemStack = ItemStack.copyItemStack(SolidXpRegistry.solidXps[i])
-                itemStack.stackSize = 4
+                val itemStack = SolidXpRegistry.solidXps[i].copy()
+                itemStack.count = 4
                 GameRegistry.addShapelessRecipe(itemStack, SolidXpRegistry.solidXps[i + 1])
             }
         }

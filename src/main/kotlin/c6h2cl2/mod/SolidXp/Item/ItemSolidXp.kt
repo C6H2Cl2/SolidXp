@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.EnumActionResult
 import net.minecraft.util.EnumHand
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
 class ItemSolidXp : ExtendedItem("SolidXp") {
@@ -14,16 +15,19 @@ class ItemSolidXp : ExtendedItem("SolidXp") {
         setHasSubtypes(true)
     }
 
-    override fun onItemRightClick(itemStack: ItemStack, world: World?, player: EntityPlayer?, enumHand: EnumHand?): ActionResult<ItemStack> {
-        player!!.addExperience(getXpInteger(itemStack))
-        --itemStack.stackSize
+    override fun onItemRightClick(world: World, player: EntityPlayer, enumHand: EnumHand): ActionResult<ItemStack> {
+        val itemStack = if(player.heldItemMainhand.item == this){
+            player.heldItemMainhand
+        }else{
+            player.heldItemOffhand
+        }
+        player.addExperience(getXpInteger(itemStack))
+        itemStack.shrink(1)
         return ActionResult(EnumActionResult.SUCCESS, itemStack)
     }
 
-    override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<ItemStack>) {
-        for (i in 0..15) {
-            list.add(ItemStack(item, 1, i))
-        }
+    override fun getSubItems(item: Item, tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
+        (0..15).mapTo(subItems) { ItemStack(item, 1, it) }
     }
 
     override fun getUnlocalizedName(stack: ItemStack?): String {
@@ -44,3 +48,4 @@ class ItemSolidXp : ExtendedItem("SolidXp") {
         }
     }
 }
+//TODO Jsonとテクスチャのファイル名を全部小文字に

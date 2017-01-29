@@ -6,18 +6,19 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Enchantments
 import net.minecraft.item.Item
-import net.minecraft.item.ItemAxe
+import net.minecraft.item.ItemPickaxe
 import net.minecraft.item.ItemStack
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
-class XpIronAxe : ItemAxe(SolidXpRegistry.materialXpIron, 8.0f, -3.0f) {
+class XpIronPickaxe : ItemPickaxe(SolidXpRegistry.materialXpIron) {
     init {
         creativeTab = SolidXpCore.tabSolidXp
-        unlocalizedName = "XpIronAxe"
-        setRegistryName(SolidXpCore.DOMAIN, "XpIronAxe")
+        unlocalizedName = "XpIronPickaxe"
+        setRegistryName(SolidXpCore.DOMAIN, "XpIronPickaxe")
     }
 
-    override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<ItemStack>) {
+    override fun getSubItems(item: Item, tab: CreativeTabs?, list: NonNullList<ItemStack>) {
         val itemStack = ItemStack(this)
         itemStack.addEnchantment(Enchantments.MENDING, 1)
         itemStack.addEnchantment(SolidXpRegistry.XpBoostTool, 2)

@@ -6,18 +6,19 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Enchantments
 import net.minecraft.item.Item
-import net.minecraft.item.ItemHoe
+import net.minecraft.item.ItemSpade
 import net.minecraft.item.ItemStack
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
-class XpIronHoe : ItemHoe(SolidXpRegistry.materialXpIron) {
+class XpIronShovel : ItemSpade(SolidXpRegistry.materialXpIron) {
     init {
         creativeTab = SolidXpCore.tabSolidXp
-        unlocalizedName = "XpIronHoe"
-        setRegistryName(SolidXpCore.DOMAIN, "XpIronHoe")
+        unlocalizedName = "XpIronShovel"
+        setRegistryName(SolidXpCore.DOMAIN, "XpIronShovel")
     }
 
-    override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<ItemStack>) {
+    override fun getSubItems(item: Item, tab: CreativeTabs?, list: NonNullList<ItemStack>) {
         val itemStack = ItemStack(this)
         itemStack.addEnchantment(Enchantments.MENDING, 1)
         itemStack.addEnchantment(SolidXpRegistry.XpBoostTool, 2)

@@ -1,6 +1,6 @@
 {
 	 "parent": "item/generated",
 	"textures": {
-		"layer0" :"solidxp:items/SolidXp_0"
+		"layer0" :"solidxp:items/solidxp_0"
 	}
 }

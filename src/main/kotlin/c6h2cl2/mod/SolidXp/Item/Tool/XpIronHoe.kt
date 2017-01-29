@@ -6,26 +6,27 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Enchantments
 import net.minecraft.item.Item
+import net.minecraft.item.ItemHoe
 import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemSword
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
-class XpIronSword : ItemSword(SolidXpRegistry.materialXpIron) {
+class XpIronHoe : ItemHoe(SolidXpRegistry.materialXpIron) {
     init {
         creativeTab = SolidXpCore.tabSolidXp
-        unlocalizedName = "XpIronSword"
-        setRegistryName(SolidXpCore.DOMAIN, "XpIronSword")
+        unlocalizedName = "XpIronHoe"
+        setRegistryName(SolidXpCore.DOMAIN, "XpIronHoe")
     }
 
-    override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<ItemStack>) {
+    override fun getSubItems(item: Item, tab: CreativeTabs?, list: NonNullList<ItemStack>) {
         val itemStack = ItemStack(this)
         itemStack.addEnchantment(Enchantments.MENDING, 1)
-        itemStack.addEnchantment(SolidXpRegistry.XpBoostWeapon, 2)
+        itemStack.addEnchantment(SolidXpRegistry.XpBoostTool, 2)
         list.add(itemStack)
     }
 
     override fun onCreated(itemStack: ItemStack?, world: World?, player: EntityPlayer?) {
         itemStack!!.addEnchantment(Enchantments.MENDING, 1)
-        itemStack.addEnchantment(SolidXpRegistry.XpBoostWeapon, 2)
+        itemStack.addEnchantment(SolidXpRegistry.XpBoostTool, 2)
     }
 }

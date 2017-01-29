@@ -1,4 +1,5 @@
 itemGroup.tabSolidXp=Solid Xp
+#固体経験値
 item.SolidXp_0.name=Solid Xp (10p)
 item.SolidXp_1.name=Solid Xp (40p)
 item.SolidXp_2.name=Solid Xp (160p)
@@ -15,14 +16,18 @@ item.SolidXp_12.name=Solid Xp (167772160p)
 item.SolidXp_13.name=Solid Xp (671088640p)
 item.SolidXp_14.name=Solid Xp (2684354560p)
 item.SolidXp_15.name=Solid Xp (10737418240p)
+#エンチャント
 enchantment.xpBoost.WEAPON=Xp Boost
 enchantment.xpBoost.DIGGER=Xp Boost
+#Item
 item.xpExtractor.name=Xp Extractor
-tile.xpStorage.name=XP Storage
 item.xpIron.name=Experience Iron
 item.xpDiamond.name=Experience Diamond
+#Tool
 item.XpIronSword.name=XpIron Sword
 item.XpIronAxe.name=XpIron Axe
 item.XpIronPickaxe.name=XpIron Pickaxe
 item.XpIronShovel.name=XpIron Shovel
 item.XpIronHoe.name=XpIron Hoe
+#Block
+tile.xpStorage.name=XP Storage

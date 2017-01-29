@@ -37,7 +37,7 @@ object XpUtil {
     /**エンチャント取得関連 */
     fun getEnchantmentsFromItemStack(itemStack: ItemStack): Map<Short, Short>? {
         val tagList = itemStack.enchantmentTagList
-        if (tagList.hasNoTags()) {
+        if (tagList == null || tagList.hasNoTags()) {
             return null
         }
         val enchants = HashMap<Short, Short>()
@@ -54,7 +54,7 @@ object XpUtil {
     fun getEnchantLevel(enchants: Map<Short, Short>, enchantment: Enchantment): Int {
         var enchantLevel: Short = 0
         for ((key, value) in enchants) {
-            if (key === Enchantment.getEnchantmentID(enchantment).toShort()) {
+            if (key == Enchantment.getEnchantmentID(enchantment).toShort()) {
                 enchantLevel = value
                 break
             }
@@ -73,12 +73,12 @@ object XpUtil {
 
     /**経験値関連 */
     fun decreasePlayerXp(player: EntityPlayer, amount: Int) {
-        var amount = amount
+        var amount_ = amount
         val i = player.experienceTotal
-        if (amount > i) {
-            amount = i
+        if (amount_ > i) {
+            amount_ = i
         }
-        player.experienceTotal -= amount
+        player.experienceTotal -= amount_
         player.experienceLevel = getLevelForXp(player.experienceTotal)
         player.experience = (player.experienceTotal.toFloat() - getXpForLevel(player.experienceLevel).toFloat()) / player.xpBarCap().toFloat()
     }

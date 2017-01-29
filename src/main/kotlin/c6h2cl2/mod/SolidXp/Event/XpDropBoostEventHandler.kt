@@ -31,9 +31,9 @@ class XpDropBoostEventHandler {
         if (xpBoostLevel == 0) {
             return
         }
-        val random = event.attackingPlayer.worldObj.rand
+        val random = event.attackingPlayer.world.rand
         val boost = 1 + random.nextFloat() * xpBoostLevel
-        event.droppedExperience = Math.round(event.originalExperience * boost)
+        event.droppedExperience = Math.round(event.originalExperience * boost).toInt()
     }
 
     @SubscribeEvent

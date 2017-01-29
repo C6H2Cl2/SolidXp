@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemPickaxe
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
 class LevelablePickaxe : ItemPickaxe(SolidXpRegistry.materialXpIron) {
@@ -18,7 +19,7 @@ class LevelablePickaxe : ItemPickaxe(SolidXpRegistry.materialXpIron) {
         setRegistryName(SolidXpCore.DOMAIN, "LevelablePickaxe")
     }
 
-    override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<ItemStack>) {
+    override fun getSubItems(item: Item, tab: CreativeTabs?, list: NonNullList<ItemStack>) {
         val itemStack = ItemStack(this)
         //appendTagToStack(itemStack)
         list.add(itemStack)
