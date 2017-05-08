@@ -1,0 +1,7 @@
+{
+    "parent": "block/pane_post",
+    "textures": {
+        "edge": "solidxp:blocks/xp_glass_pane_top",
+        "pane": "solidxp:blocks/xp_glass"
+    }
+}

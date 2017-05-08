@@ -1,0 +1,6 @@
+{
+    "parent": "block/pane_noside",
+    "textures": {
+        "pane": "solidxp:blocks/xp_glass"
+    }
+}

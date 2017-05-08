@@ -1,28 +1,66 @@
-itemGroup.tabSolidXp=Solid Xp
-item.SolidXp_0.name=Solid Xp (10p)
-item.SolidXp_1.name=Solid Xp (40p)
-item.SolidXp_2.name=Solid Xp (160p)
-item.SolidXp_3.name=Solid Xp (640p)
-item.SolidXp_4.name=Solid Xp (2560p)
-item.SolidXp_5.name=Solid Xp (10240p)
-item.SolidXp_6.name=Solid Xp (40960p)
-item.SolidXp_7.name=Solid Xp (163840p)
-item.SolidXp_8.name=Solid Xp (655360p)
-item.SolidXp_9.name=Solid Xp (2621440p)
-item.SolidXp_10.name=Solid Xp (110485760p)
-item.SolidXp_11.name=Solid Xp (41943040p)
-item.SolidXp_12.name=Solid Xp (167772160p)
-item.SolidXp_13.name=Solid Xp (671088640p)
-item.SolidXp_14.name=Solid Xp (2684354560p)
-item.SolidXp_15.name=Solid Xp (10737418240p)
-enchantment.xpBoost.WEAPON=Xp Boost
-enchantment.xpBoost.DIGGER=Xp Boost
-item.xpExtractor.name=Xp Extractor
-tile.xpStorage.name=XP Storage
-item.xpIron.name=Experience Iron
-item.xpDiamond.name=Experience Diamond
+itemGroup.SolidXp=Solid Xp
+# Items
+# SolidXp
+item.solidxp_0.name=Solid Xp (10p)
+item.solidxp_1.name=Solid Xp (40p)
+item.solidxp_2.name=Solid Xp (160p)
+item.solidxp_3.name=Solid Xp (640p)
+item.solidxp_4.name=Solid Xp (2560p)
+item.solidxp_5.name=Solid Xp (10240p)
+item.solidxp_6.name=Solid Xp (40960p)
+item.solidxp_7.name=Solid Xp (163840p)
+item.solidxp_8.name=Solid Xp (655360p)
+item.solidxp_9.name=Solid Xp (2621440p)
+item.solidxp_10.name=Solid Xp (10485760p)
+item.solidxp_11.name=Solid Xp (41943040p)
+item.solidxp_12.name=Solid Xp (167772160p)
+item.solidxp_13.name=Solid Xp (671088640p)
+item.solidxp_14.name=Solid Xp (2684354560p)
+item.solidxp_15.name=Solid Xp (10737418240p)
+# Materials
+item.xpIron.name=Experience Infused Iron
+item.xpDiamond.name=Experience Infused Diamond
+# Tools
 item.XpIronSword.name=XpIron Sword
 item.XpIronAxe.name=XpIron Axe
 item.XpIronPickaxe.name=XpIron Pickaxe
 item.XpIronShovel.name=XpIron Shovel
 item.XpIronHoe.name=XpIron Hoe
+# Other Items
+item.xpExtractor.name=Xp Extractor
+
+# Enchantments
+enchantment.xpBoost.WEAPON=Xp Boost
+enchantment.xpBoost.DIGGER=Xp Boost
+
+# Blocks
+tile.xpStorage.name=XP Storage
+tile.xpInfuser.name=Xp Infuser
+tile.xpCobbleStone.name=Xp Cobblestone
+tile.xpStone.name=Xp Stone
+tile.xpMachineBase.name=Xp Machine Frame(Basic)
+tile.xpGlass.name=Xp Glass
+tile.xpWoodPlank.name=Xp Wood Planks
+
+# Gui
+solidxp.gui.xp_infuser=Xp Infuser
+
+# Texts
+solidxp.text.xp_extractor=Extract %d Xps
+solidxp.text.not_enough_xp=You don't have enough Xp!
+
+# Achievements
+achievement.solidxp.extractXp=Extract your Experience
+achievement.solidxp.extractXp.desc=Use Xp Extractor
+achievement.solidxp.craftXpIronPickaxe=Enhance your Experience
+achievement.solidxp.craftXpIronPickaxe.desc=Craft XpIron Pickaxe
+achievement.solidxp.craftXpIronHoe=The experience of Farming
+achievement.solidxp.craftXpIronHoe.desc=Craft XpIron Hoe
+achievement.solidxp.craftXpIronSword=kill enemy forever
+achievement.solidxp.craftXpIronSword.desc=Craft XpIron Sword
+achievement.solidxp.putXpInfuser=The begin of Xp-Technology
+achievement.solidxp.putXpInfuser.desc=Put Xp Infuser
+
+# JEI
+solidxp.jei.xp_infusing=Xp Infusing
+solidxp.jei.extra.xp_infusing_cost= Xp Infusing Cost

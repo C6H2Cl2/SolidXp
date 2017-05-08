@@ -1,29 +1,60 @@
-itemGroup.tabSolidXp=Solid Xp
-item.SolidXp_0.name=固体経験値(10p)
-item.SolidXp_1.name=固体経験値(40p)
-item.SolidXp_2.name=固体経験値(160p)
-item.SolidXp_3.name=固体経験値(640p)
-item.SolidXp_4.name=固体経験値(2560p)
-item.SolidXp_5.name=固体経験値(10240p)
-item.SolidXp_6.name=固体経験値(40960p)
-item.SolidXp_7.name=固体経験値(163840p)
-item.SolidXp_8.name=固体経験値(655360p)
-item.SolidXp_9.name=固体経験値(2621440p)
-item.SolidXp_10.name=固体経験値(110485760p)
-item.SolidXp_11.name=固体経験値(41943040p)
-item.SolidXp_12.name=固体経験値(167772160p)
-item.SolidXp_13.name=固体経験値(671088640p)
-item.SolidXp_14.name=固体経験値(2684354560p)
-item.SolidXp_15.name=固体経験値(10737418240p)
-enchantment.xpBoost.WEAPON=経験値増加
-enchantment.xpBoost.DIGGER=経験値増加
-item.xpExtractor.name=経験値抽出機
-item.xpStorage.name=経験値貯蔵庫
-item.xpIron.name=経験鉄
+itemGroup.SolidXp=Solid Xp
+# Items
+# SolidXp
+item.solidxp_0.name=固体経験値 (10p)
+item.solidxp_1.name=固体経験値 (40p)
+item.solidxp_2.name=固体経験値 (160p)
+item.solidxp_3.name=固体経験値 (640p)
+item.solidxp_4.name=固体経験値 (2560p)
+item.solidxp_5.name=固体経験値 (10240p)
+item.solidxp_6.name=固体経験値 (40960p)
+item.solidxp_7.name=固体経験値 (163840p)
+item.solidxp_8.name=固体経験値 (655360p)
+item.solidxp_9.name=固体経験値 (2621440p)
+item.solidxp_10.name=固体経験値 (10485760p)
+item.solidxp_11.name=固体経験値 (41943040p)
+item.solidxp_12.name=固体経験値 (167772160p)
+item.solidxp_13.name=固体経験値 (671088640p)
+item.solidxp_14.name=固体経験値 (2684354560p)
+item.solidxp_15.name=固体経験値 (10737418240p)
+# Materials
+item.xpIron.name=経験値鉄
 item.xpDiamond.name=経験値ダイヤモンド
-item.XpIronSword.name=経験鉄の剣
+# Tools
+item.XpIronSword.name=経験値鉄の剣
 item.XpIronAxe.name=経験値鉄の斧
 item.XpIronPickaxe.name=経験値鉄のツルハシ
 item.XpIronShovel.name=経験値鉄のシャベル
 item.XpIronHoe.name=経験値鉄のクワ
-tile.purpurBlock.name=ゆかりさんprpr
+# Other Items
+item.xpExtractor.name=経験値抽出器
+
+# Enchantments
+enchantment.xpBoost.WEAPON=経験値増加
+enchantment.xpBoost.DIGGER=経験値増加
+
+# Blocks
+tile.xpStorage.name=経験値貯蔵庫
+tile.xpInfuser.name=経験値注入器
+tile.xpCobbleStone.name=経験値丸石
+tile.xpStone.name=経験値石
+tile.xpMachineBase.name=経験値筐体(基本)
+
+# Gui
+solidxp.gui.xp_infuser=経験値注入器
+
+# Texts
+solidxp.text.xp_extractor=抽出量: %d Xp
+solidxp.text.not_enough_xp=経験値が足りません！
+
+# Achievements
+achievement.solidxp.extractXp=経験値の抽出
+achievement.solidxp.extractXp.desc=経験値抽出機を使う
+achievement.solidxp.craftXpIronPickaxe=経験の増幅
+achievement.solidxp.craftXpIronPickaxe.desc=経験値鉄のツルハシを作る
+achievement.solidxp.craftXpIronHoe=農業の経験
+achievement.solidxp.craftXpIronHoe.desc=経験値鉄のクワを作る
+achievement.solidxp.craftXpIronSword=無限に戦い続ける
+achievement.solidxp.craftXpIronSword.desc=経験値鉄の剣を作る
+achievement.solidxp.putXpInfuser=経験値テクノロジーの始まり
+achievement.solidxp.putXpInfuser.desc=経験値注入器を設置する
