@@ -95,13 +95,13 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
 
     override fun readFromNBT(compound: NBTTagCompound) {
         super.readFromNBT(compound)
-        if (compound.hasKey(INVENTORY)){
+        if (compound.hasKey(INVENTORY)) {
             inventory.deserializeNBT(compound.getTag(INVENTORY) as NBTTagCompound)
         }
-        if (compound.hasKey(PROGRESS)){
+        if (compound.hasKey(PROGRESS)) {
             progress = compound.getFloat(PROGRESS)
         }
-        if (compound.hasKey(XP_STORAGE)){
+        if (compound.hasKey(XP_STORAGE)) {
             xpValue = compound.getInteger(XP_STORAGE)
         }
         if (compound.hasKey(RECIPE_CACHE_ID))

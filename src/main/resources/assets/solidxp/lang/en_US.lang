@@ -41,9 +41,11 @@ tile.xpStone.name=Xp Stone
 tile.xpMachineBase.name=Xp Machine Frame(Basic)
 tile.xpGlass.name=Xp Glass
 tile.xpWoodPlank.name=Xp Wood Planks
+tile.xpChest.name=Xp Chest
 
 # Gui
 solidxp.gui.xp_infuser=Xp Infuser
+solidxp.gui.xp_chest=Xp Chest
 
 # Texts
 solidxp.text.xp_extractor=Extract %d Xps

@@ -1,11 +1,6 @@
 package c6h2cl2.solidxp
 
 import c6h2cl2.solidxp.Proxy.CommonProxy
-import mezz.jei.api.IJeiRuntime
-import mezz.jei.api.IModPlugin
-import mezz.jei.api.IModRegistry
-import mezz.jei.api.ISubtypeRegistry
-import mezz.jei.api.ingredients.IModIngredientRegistration
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -15,13 +10,12 @@ import net.minecraftforge.fml.common.ModMetadata
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
-import net.minecraftforge.fml.common.network.NetworkRegistry
 import java.io.File
 
 /**
  * @author C6H2Cl2
  */
-@Mod(modid = MOD_ID, name = MOD_NAME, version = VERSION, useMetadata = true)
+@Mod(modid = MOD_ID, name = MOD_NAME, version = VERSION, useMetadata = true, acceptedMinecraftVersions = "1.11.2")
 class SolidXpCore {
 
     companion object {

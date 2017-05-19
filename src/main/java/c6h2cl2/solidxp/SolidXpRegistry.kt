@@ -193,6 +193,7 @@ object SolidXpRegistry {
         GameRegistry.addRecipe(ItemStack(xpMachineBasic), "III", "I I", "III", 'I', xpIron)
         GameRegistry.addRecipe(ItemStack(xpExtractor),"III","GRG","D D",'I', Items.IRON_INGOT,'G',Items.GOLD_INGOT,'R', Blocks.REDSTONE_BLOCK,'D',Items.DIAMOND)
         GameRegistry.addRecipe(ItemStack(xpInfuser), "III", "RMR", "EEE", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'M', xpMachineBasic, 'E', xpIron)
+        GameRegistry.addRecipe(ItemStack(xpChest), "WWW", "W W", "WWW", 'W', xpWoodPlank)
         GameRegistry.addSmelting(xpCobbleStone, ItemStack(xpStone), 0f)
         //Enchantの登録
         xpBoost.forEach {

@@ -1,0 +1,30 @@
+{
+  "parent": "block/block",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, 135, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    }
+  },
+  "elements": [
+    {
+      "from": [ 1, 0, 1 ],
+      "to": [ 15, 14, 15 ],
+      "faces": {
+        "down":  { "texture": "#top", "cullface": "down" },
+        "up":    { "texture": "#top", "cullface": "up" },
+        "north": { "texture": "#front", "cullface": "north" },
+        "south": { "texture": "#side", "cullface": "south" },
+        "west":  { "texture": "#side", "cullface": "west" },
+        "east":  { "texture": "#side", "cullface": "east" }
+      }
+    }
+  ],
+  "textures": {
+    "particle": "solidxp:blocks/xp_chest_front",
+    "front": "solidxp:blocks/xp_chest_front",
+    "side": "solidxp:blocks/xp_chest_side",
+    "top": "solidxp:blocks/xp_chest_top"
+  }
+}

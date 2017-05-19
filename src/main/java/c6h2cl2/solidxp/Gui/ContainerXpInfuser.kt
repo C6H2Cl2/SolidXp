@@ -19,7 +19,7 @@ import net.minecraftforge.items.SlotItemHandler
  * 1: Output Slot
  * 2: Xp Slot
  */
-class ContainerXpInfuser(val world: World, val pos: BlockPos, val playerInventory: InventoryPlayer) : Container() {
+class ContainerXpInfuser(val world: World, val pos: BlockPos, playerInventory: InventoryPlayer) : Container() {
     val tile = world.getTileEntity(pos) as TileXpInfuser
 
     init {
@@ -27,13 +27,12 @@ class ContainerXpInfuser(val world: World, val pos: BlockPos, val playerInventor
         addSlotToContainer(SlotItemHandler(inventory, 0, 43, 34))
         addSlotToContainer(SlotItemHandler(inventory, 1, 108, 34))
         addSlotToContainer(SlotItemHandler(inventory, 2, 152, 61))
-        //val i = 2 * 18 + 1
         for (j in 0 until 9) {
-            addSlotToContainer(Slot(playerInventory, j, 8 + j * 18, 142))
+            addSlotToContainer(Slot(playerInventory, 3 + j, 8 + j * 18, 142))
         }
         for (j in 0..2) {
             for (k in 0 until 9) {
-                addSlotToContainer(Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 84 + j * 18))
+                addSlotToContainer(Slot(playerInventory, k + j * 9 + 12, 8 + k * 18, 84 + j * 18))
             }
         }
     }

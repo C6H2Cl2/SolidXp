@@ -22,16 +22,10 @@ class RenderXpChest : TileEntitySpecialRenderer<TileXpChest>() {
         GlStateManager.enableDepth()
         GlStateManager.depthFunc(515)
         GlStateManager.depthMask(true)
-        var i: Int
+        val i: Int
 
         if (te.hasWorld()) {
-            val block = te.blockType
             i = te.blockMetadata
-
-            if (block is BlockChest && i == 0) {
-                block.checkForSurroundingChests(te.world, te.pos, te.world.getBlockState(te.pos))
-                i = te.blockMetadata
-            }
         } else {
             i = 0
         }
