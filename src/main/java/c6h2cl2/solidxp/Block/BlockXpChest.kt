@@ -3,7 +3,6 @@ package c6h2cl2.solidxp.Block
 import c6h2cl2.solidxp.*
 import c6h2cl2.solidxp.SolidXpRegistry
 import c6h2cl2.solidxp.TileEntity.TileXpChest
-import c6h2cl2.solidxp.TileEntity.TileXpInfuser
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.BlockHorizontal
 import net.minecraft.block.SoundType.WOOD

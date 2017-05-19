@@ -9,6 +9,7 @@ import net.minecraftforge.oredict.OreDictionary
 /**
  * @author C6H2Cl2
  */
+
 object RecipeRegistry {
 
     private val xpInfuserRecipes = Lists.newArrayList<XpInfuserRecipe>()
@@ -17,8 +18,9 @@ object RecipeRegistry {
         addXpInfuserRecipe(ItemStack(Items.IRON_INGOT), ItemStack(SolidXpRegistry.xpIron), 120)
         addXpInfuserRecipe(ItemStack(Items.DIAMOND), ItemStack(SolidXpRegistry.xpDiamond), 640)
         addXpInfuserRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(SolidXpRegistry.xpCobbleStone), 40)
-        addXpInfuserRecipe(ItemStack(Blocks.GLASS), ItemStack(SolidXpRegistry.xpGlass), 40)
-        addXpInfuserRecipe(ItemStack(Blocks.PLANKS, 1, OreDictionary.WILDCARD_VALUE), ItemStack(SolidXpRegistry.xpWoodPlank), 40)
+        addXpInfuserRecipe(ItemStack(Blocks.GLASS), ItemStack(SolidXpRegistry.xpGlass), 60)
+        addXpInfuserRecipe(ItemStack(Blocks.PLANKS, 1, OreDictionary.WILDCARD_VALUE), ItemStack(SolidXpRegistry.xpWoodPlank), 60)
+        addXpInfuserRecipe(ItemStack(Items.COAL), ItemStack(SolidXpRegistry.xpCoal), 160)
     }
 
     fun register(entry: ISolidXpRecipe) {

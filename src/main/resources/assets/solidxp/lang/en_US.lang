@@ -20,6 +20,7 @@ item.solidxp_15.name=Solid Xp (10737418240p)
 # Materials
 item.xpIron.name=Experience Infused Iron
 item.xpDiamond.name=Experience Infused Diamond
+item.xpCoal.name=Xp Coal
 # Tools
 item.XpIronSword.name=XpIron Sword
 item.XpIronAxe.name=XpIron Axe
