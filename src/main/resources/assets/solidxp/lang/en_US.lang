@@ -22,6 +22,7 @@ item.xpIron.name=Xp Iron
 item.xpDiamond.name=Xp Diamond
 item.xpCoal.name=Xp Coal
 item.xpFuel.name=Xp Fuel
+item.xpFuelAdv.name=Full-Infused Xp Fuel
 # Tools
 item.XpIronSword.name=XpIron Sword
 item.XpIronAxe.name=XpIron Axe
@@ -45,6 +46,7 @@ tile.xpGlass.name=Xp Glass
 tile.xpGlassPane.name=Xp Glass Pane
 tile.xpWoodPlank.name=Xp Wood Planks
 tile.xpChest.name=Xp Chest
+tile.xpFuelBlock.name=Xp Fuel Block
 
 # Gui
 solidxp.gui.xp_infuser=Xp Infuser

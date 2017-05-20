@@ -22,6 +22,8 @@ object RecipeRegistry {
         addXpInfuserRecipe(ItemStack(Blocks.PLANKS, 1, OreDictionary.WILDCARD_VALUE), ItemStack(SolidXpRegistry.xpWoodPlank), 60)
         addXpInfuserRecipe(ItemStack(Items.COAL), ItemStack(SolidXpRegistry.xpCoal), 160)
         addXpInfuserRecipe(ItemStack(SolidXpRegistry.xpCoal), ItemStack(SolidXpRegistry.xpFuel), 800)
+        addXpInfuserRecipe(ItemStack(SolidXpRegistry.xpFuel), ItemStack(SolidXpRegistry.xpFuelAdv), 7680)
+        addXpInfuserRecipe(ItemStack(SolidXpRegistry.xpFuelAdv), ItemStack(SolidXpRegistry.xpFuelBlock), 77760)
     }
 
     fun register(entry: ISolidXpRecipe) {

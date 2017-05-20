@@ -22,6 +22,7 @@ item.xpIron.name=経験値鉄
 item.xpDiamond.name=経験値ダイヤモンド
 item.xpCoal.name=経験値炭
 item.xpFuel.name=経験値燃料
+item.xpFuelAdv.name=すごいけいけんちねんりょう
 # Tools
 item.XpIronSword.name=経験値鉄の剣
 item.XpIronAxe.name=経験値鉄の斧
@@ -45,6 +46,7 @@ tile.xpGlass.name=経験値ガラス
 tile.xpGlassPane.name=経験値板ガラス
 tile.xpWoodPlank.name=経験値木材
 tile.xpChest.name=経験値チェスト
+tile.xpFuelBlock.name=†経験に満たされし業火を宿すもの†
 
 # Gui
 solidxp.gui.xp_infuser=経験値注入器

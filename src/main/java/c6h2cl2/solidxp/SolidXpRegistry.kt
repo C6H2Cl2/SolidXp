@@ -65,6 +65,7 @@ object SolidXpRegistry {
     val xpDiamond = ItemUtil.CreateItem("xpDiamond", modID = MOD_ID, creativeTabs = tabSolidXp)
     val xpCoal = ItemUtil.CreateItem("xpCoal", "xp_coal", MOD_ID, tabSolidXp)
     val xpFuel = ItemUtil.CreateItem("xpFuel", "xp_fuel", MOD_ID, tabSolidXp)
+    val xpFuelAdv = ItemUtil.CreateItem("xpFuelAdv", "xp_fuel_adv", MOD_ID, tabSolidXp)
 
     //Main
     val solidXp = ItemSolidXp()
@@ -88,6 +89,7 @@ object SolidXpRegistry {
     //Misc
     val xpChest = BlockXpChest()
     //中間素材
+    val xpFuelBlock = SimpleBlock(Material.ROCK, "xpFuelBlock", "xp_fuel_block", 1f, 10f, 0.4f, "pickaxe", 0)
     val xpMachineBasic = SimpleBlock(Material.ROCK, "xpMachineBase", "xp_machine_base", 1f, 10f, 0.4f, "pickaxe", 0, SoundType.METAL)
 
     //ItemBlocks
@@ -113,6 +115,9 @@ object SolidXpRegistry {
             return@IFuelHandler 0
         when(fuel.item){
             xpCoal -> 3200
+            xpFuel -> 12800
+            xpFuelAdv -> 102400
+            xpFuelBlock.getItemBlock() -> 921600
             else -> 0
         }
     }
@@ -130,6 +135,7 @@ object SolidXpRegistry {
         GameRegistry.register(xpDiamond)
         GameRegistry.register(xpCoal)
         GameRegistry.register(xpFuel)
+        GameRegistry.register(xpFuelAdv)
         GameRegistry.register(xpExtractor)
         GameRegistry.register(xpIronShovel)
         GameRegistry.register(xpIronPickaxe)
@@ -138,23 +144,25 @@ object SolidXpRegistry {
         GameRegistry.register(xpIronSword)
         //Blockの登録
         GameRegistry.register(xpInfuser)
+        GameRegistry.register(xpChest)
         GameRegistry.register(xpCobbleStone)
         GameRegistry.register(xpStone)
         GameRegistry.register(xpMachineBasic)
         GameRegistry.register(xpGlass)
         GameRegistry.register(xpGlassPane)
         GameRegistry.register(xpWoodPlank)
-        GameRegistry.register(xpChest)
+        GameRegistry.register(xpFuelBlock)
         //GameRegistry.register(xpStoneBrick)
         //ItemBlockの登録
         GameRegistry.register(xpInfuserIB)
+        GameRegistry.register(xpChest.initItemBlock())
         GameRegistry.register(xpCobbleStone.initItemBlock())
         GameRegistry.register(xpStone.initItemBlock())
         GameRegistry.register(xpMachineBasic.initItemBlock())
         GameRegistry.register(xpGlass.initItemBlock())
         GameRegistry.register(xpGlassPane.initItemBlock())
         GameRegistry.register(xpWoodPlank.initItemBlock())
-        GameRegistry.register(xpChest.initItemBlock())
+        GameRegistry.register(xpFuelBlock.initItemBlock())
         //GameRegistry.register(xpStoneBrick.initItemBlock())
         if (event.side.isClient) {
             //ItemのRender登録
@@ -174,6 +182,7 @@ object SolidXpRegistry {
             ModelLoader.setCustomModelResourceLocation(xpInfuserIB, 0, getModelResourceLocation(xpInfuserIB))
             ModelLoader.setCustomModelResourceLocation(xpCoal, 0, getModelResourceLocation(xpCoal))
             ModelLoader.setCustomModelResourceLocation(xpFuel, 0, getModelResourceLocation(xpFuel))
+            ModelLoader.setCustomModelResourceLocation(xpFuelAdv, 0, getModelResourceLocation(xpFuelAdv))
             //ItemBlockのRender登録
             ModelLoader.setCustomModelResourceLocation(xpCobbleStone.getItemBlock(), 0, getModelResourceLocation(xpCobbleStone))
             ModelLoader.setCustomModelResourceLocation(xpStone.getItemBlock(), 0, getModelResourceLocation(xpStone))
@@ -182,6 +191,7 @@ object SolidXpRegistry {
             ModelLoader.setCustomModelResourceLocation(xpGlassPane.getItemBlock(), 0, getModelResourceLocation(xpGlassPane))
             ModelLoader.setCustomModelResourceLocation(xpWoodPlank.getItemBlock(), 0, getModelResourceLocation(xpWoodPlank))
             ModelLoader.setCustomModelResourceLocation(xpChest.getItemBlock(), 0, getModelResourceLocation(xpChest))
+            ModelLoader.setCustomModelResourceLocation(xpFuelBlock.getItemBlock(), 0, getModelResourceLocation(xpFuelBlock))
             /*(0..3).forEach {
                 ModelLoader.setCustomModelResourceLocation(xpStoneBrick.getItemBlock(), it, ModelResourceLocation(ResourceLocation(MOD_ID, "xp_stone_brick_${BlockStoneBrick.EnumType.byMetadata(it).unlocalizedName}"), "inventory"))
             }*/
@@ -209,6 +219,8 @@ object SolidXpRegistry {
         GameRegistry.addRecipe(ItemStack(xpChest), "WWW", "W W", "WWW", 'W', xpWoodPlank)
         GameRegistry.addRecipe(ItemStack(xpGlassPane, 16), "GGG", "GGG", 'G', xpGlass)
         GameRegistry.addShapelessRecipe(ItemStack(xpFuel), xpCoal, xpCoal, xpCoal, xpCoal)
+        GameRegistry.addShapelessRecipe(ItemStack(xpFuelAdv), xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel)
+        GameRegistry.addShapelessRecipe(ItemStack(xpFuelBlock), xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv)
         //製錬レシピの登録
         GameRegistry.addSmelting(xpCobbleStone, ItemStack(xpStone), 0f)
         //FuelHandlerの登録
