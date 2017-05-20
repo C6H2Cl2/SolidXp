@@ -36,6 +36,7 @@ class ItemSolidXp : Item() {
         val itemStack = player.getHeldItem(hand)
         val xpValue = getXpValue(itemStack.metadata)
         player.addAndSpawnXpOrb(xpValue, world)
+        itemStack.count--
         return ActionResult(SUCCESS, itemStack)
     }
 

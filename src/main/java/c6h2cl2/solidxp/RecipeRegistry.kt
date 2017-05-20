@@ -16,11 +16,12 @@ object RecipeRegistry {
 
     init {
         addXpInfuserRecipe(ItemStack(Items.IRON_INGOT), ItemStack(SolidXpRegistry.xpIron), 120)
-        addXpInfuserRecipe(ItemStack(Items.DIAMOND), ItemStack(SolidXpRegistry.xpDiamond), 640)
+        addXpInfuserRecipe(ItemStack(Items.DIAMOND), ItemStack(SolidXpRegistry.xpDiamond), 1280)
         addXpInfuserRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(SolidXpRegistry.xpCobbleStone), 40)
         addXpInfuserRecipe(ItemStack(Blocks.GLASS), ItemStack(SolidXpRegistry.xpGlass), 60)
         addXpInfuserRecipe(ItemStack(Blocks.PLANKS, 1, OreDictionary.WILDCARD_VALUE), ItemStack(SolidXpRegistry.xpWoodPlank), 60)
         addXpInfuserRecipe(ItemStack(Items.COAL), ItemStack(SolidXpRegistry.xpCoal), 160)
+        addXpInfuserRecipe(ItemStack(SolidXpRegistry.xpCoal), ItemStack(SolidXpRegistry.xpFuel), 800)
     }
 
     fun register(entry: ISolidXpRecipe) {
@@ -55,10 +56,12 @@ object RecipeRegistry {
         return xpInfuserRecipes.clone() as List<XpInfuserRecipe>
     }
 
-    interface ISolidXpRecipe
+    interface ISolidXpRecipe {
+        var id: Int
+    }
 
     class XpInfuserRecipe(val material: ItemStack, val output: ItemStack, val xp: Int) : ISolidXpRecipe {
-        var id = Int.MIN_VALUE
+        override var id = Int.MIN_VALUE
             set(value) {
                 if (field == Int.MIN_VALUE) {
                     field = value

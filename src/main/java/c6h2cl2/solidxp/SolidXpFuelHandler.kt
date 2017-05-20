@@ -12,6 +12,7 @@ object SolidXpFuelHandler: IFuelHandler {
             return 0
         return when(fuel.item){
             SolidXpRegistry.xpCoal -> 3200
+            SolidXpRegistry.xpFuel -> 12800
             else -> 0
         }
     }

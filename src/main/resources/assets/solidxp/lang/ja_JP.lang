@@ -20,6 +20,8 @@ item.solidxp_15.name=固体経験値 (10737418240p)
 # Materials
 item.xpIron.name=経験値鉄
 item.xpDiamond.name=経験値ダイヤモンド
+item.xpCoal.name=経験値炭
+item.xpFuel.name=経験値燃料
 # Tools
 item.XpIronSword.name=経験値鉄の剣
 item.XpIronAxe.name=経験値鉄の斧
@@ -39,6 +41,10 @@ tile.xpInfuser.name=経験値注入器
 tile.xpCobbleStone.name=経験値丸石
 tile.xpStone.name=経験値石
 tile.xpMachineBase.name=経験値筐体(基本)
+tile.xpGlass.name=経験値ガラス
+tile.xpGlassPane.name=経験値板ガラス
+tile.xpWoodPlank.name=経験値木材
+tile.xpChest.name=経験値チェスト
 
 # Gui
 solidxp.gui.xp_infuser=経験値注入器
@@ -58,3 +64,7 @@ achievement.solidxp.craftXpIronSword=無限に戦い続ける
 achievement.solidxp.craftXpIronSword.desc=経験値鉄の剣を作る
 achievement.solidxp.putXpInfuser=経験値テクノロジーの始まり
 achievement.solidxp.putXpInfuser.desc=経験値注入器を設置する
+
+# JEI
+solidxp.jei.xp_infusing=経験値注入
+solidxp.jei.extra.xp_infusing_cost=経験値要求量

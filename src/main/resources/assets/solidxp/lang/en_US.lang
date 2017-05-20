@@ -18,9 +18,10 @@ item.solidxp_13.name=Solid Xp (671088640p)
 item.solidxp_14.name=Solid Xp (2684354560p)
 item.solidxp_15.name=Solid Xp (10737418240p)
 # Materials
-item.xpIron.name=Experience Infused Iron
-item.xpDiamond.name=Experience Infused Diamond
+item.xpIron.name=Xp Iron
+item.xpDiamond.name=Xp Diamond
 item.xpCoal.name=Xp Coal
+item.xpFuel.name=Xp Fuel
 # Tools
 item.XpIronSword.name=XpIron Sword
 item.XpIronAxe.name=XpIron Axe
@@ -41,6 +42,7 @@ tile.xpCobbleStone.name=Xp Cobblestone
 tile.xpStone.name=Xp Stone
 tile.xpMachineBase.name=Xp Machine Frame(Basic)
 tile.xpGlass.name=Xp Glass
+tile.xpGlassPane.name=Xp Glass Pane
 tile.xpWoodPlank.name=Xp Wood Planks
 tile.xpChest.name=Xp Chest
 
@@ -66,4 +68,4 @@ achievement.solidxp.putXpInfuser.desc=Put Xp Infuser
 
 # JEI
 solidxp.jei.xp_infusing=Xp Infusing
-solidxp.jei.extra.xp_infusing_cost= Xp Infusing Cost
+solidxp.jei.extra.xp_infusing_cost=Xp Infusing Cost
