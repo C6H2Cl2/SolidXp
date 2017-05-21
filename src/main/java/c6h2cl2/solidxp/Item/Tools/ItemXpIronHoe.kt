@@ -1,5 +1,8 @@
-package c6h2cl2.solidxp.Item
+package c6h2cl2.solidxp.Item.Tools
 
+import c6h2cl2.YukariLib.EnumToolType
+import c6h2cl2.YukariLib.EnumToolType.HOE
+import c6h2cl2.solidxp.Item.ICraftResultEnchanted
 import c6h2cl2.solidxp.MOD_ID
 import c6h2cl2.solidxp.SolidXpRegistry
 import net.minecraft.creativetab.CreativeTabs
@@ -42,5 +45,9 @@ class ItemXpIronHoe : ItemHoe(SolidXpRegistry.materialXpIron), ICraftResultEncha
         stack.addEnchantment(Enchantments.MENDING, 1)
         stack.addEnchantment(SolidXpRegistry.xpBoost[DIGGER], 2)
         return stack
+    }
+
+    override fun getToolType(): EnumToolType {
+        return HOE
     }
 }

@@ -1,5 +1,8 @@
-package c6h2cl2.solidxp.Item
+package c6h2cl2.solidxp.Item.Tools
 
+import c6h2cl2.YukariLib.EnumToolType
+import c6h2cl2.YukariLib.EnumToolType.SHOVEL
+import c6h2cl2.solidxp.Item.ICraftResultEnchanted
 import c6h2cl2.solidxp.MOD_ID
 import c6h2cl2.solidxp.SolidXpRegistry
 import net.minecraft.creativetab.CreativeTabs
@@ -7,7 +10,7 @@ import net.minecraft.enchantment.EnumEnchantmentType.DIGGER
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Enchantments
 import net.minecraft.item.Item
-import net.minecraft.item.ItemAxe
+import net.minecraft.item.ItemSpade
 import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
 import net.minecraft.util.ResourceLocation
@@ -16,10 +19,10 @@ import net.minecraft.world.World
 /**
  * @author C6H2Cl2
  */
-class ItemXpIronAxe : ItemAxe(SolidXpRegistry.materialXpIron, 8.0f, -3.1f), ICraftResultEnchanted {
+class ItemXpIronShovel : ItemSpade(SolidXpRegistry.materialXpIron), ICraftResultEnchanted {
     init {
-        unlocalizedName = "XpIronAxe"
-        registryName = ResourceLocation(MOD_ID, "xpIronAxe")
+        unlocalizedName = "XpIronShovel"
+        registryName = ResourceLocation(MOD_ID, "xpIronShovel")
         creativeTab = SolidXpRegistry.tabSolidXp
         hasSubtypes = true
     }
@@ -41,5 +44,9 @@ class ItemXpIronAxe : ItemAxe(SolidXpRegistry.materialXpIron, 8.0f, -3.1f), ICra
         stack.addEnchantment(Enchantments.MENDING, 1)
         stack.addEnchantment(SolidXpRegistry.xpBoost[DIGGER], 2)
         return stack
+    }
+
+    override fun getToolType(): EnumToolType {
+        return SHOVEL
     }
 }

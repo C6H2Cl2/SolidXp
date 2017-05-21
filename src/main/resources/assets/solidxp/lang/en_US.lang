@@ -29,6 +29,12 @@ item.XpIronAxe.name=XpIron Axe
 item.XpIronPickaxe.name=XpIron Pickaxe
 item.XpIronShovel.name=XpIron Shovel
 item.XpIronHoe.name=XpIron Hoe
+item.XpDiamondSword.name=XpDiamond Sword
+item.XpDiamondAxe.name=XpDiamond Axe
+item.XpDiamondPickaxe.name=XpDiamond Pickaxe
+item.XpDiamondShovel.name=XpDiamond Shovel
+item.XpDiamondHoe.name=XpDiamond Hoe
+item.XpDiamondSword.name=XpDiamond Sword
 # Other Items
 item.xpExtractor.name=Xp Extractor
 

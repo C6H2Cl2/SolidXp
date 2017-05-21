@@ -10,11 +10,16 @@ import c6h2cl2.solidxp.Enchant.XpBoost
 import c6h2cl2.solidxp.Event.XpBoostEventHandler
 import c6h2cl2.solidxp.Item.ItemSolidXp
 import c6h2cl2.solidxp.Item.ItemXpExtractor
-import c6h2cl2.solidxp.Item.ItemXpIronAxe
-import c6h2cl2.solidxp.Item.ItemXpIronHoe
-import c6h2cl2.solidxp.Item.ItemXpIronPickaxe
-import c6h2cl2.solidxp.Item.ItemXpIronShovel
-import c6h2cl2.solidxp.Item.ItemXpIronSword
+import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondAxe
+import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondHoe
+import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondPickaxe
+import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondShovel
+import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondSword
+import c6h2cl2.solidxp.Item.Tools.ItemXpIronAxe
+import c6h2cl2.solidxp.Item.Tools.ItemXpIronHoe
+import c6h2cl2.solidxp.Item.Tools.ItemXpIronPickaxe
+import c6h2cl2.solidxp.Item.Tools.ItemXpIronShovel
+import c6h2cl2.solidxp.Item.Tools.ItemXpIronSword
 import c6h2cl2.solidxp.Render.RenderXpChest
 import c6h2cl2.solidxp.TileEntity.TileXpChest
 import c6h2cl2.solidxp.TileEntity.TileXpInfuser
@@ -58,6 +63,7 @@ object SolidXpRegistry {
 
     //ToolMaterial
     val materialXpIron = EnumHelper.addToolMaterial("xpIron", 2, 400, 7.2f, 2.5f, 16)
+    val materialXpDiamond = EnumHelper.addToolMaterial("xpDiamond", 3, 2000, 10.4f, 4.0f, 12)
 
     //Items
     //中間素材
@@ -70,11 +76,19 @@ object SolidXpRegistry {
     //Main
     val solidXp = ItemSolidXp()
     val xpExtractor = ItemXpExtractor()
+    //Tools
+    //XpIron
     val xpIronShovel = ItemXpIronShovel()
     val xpIronPickaxe = ItemXpIronPickaxe()
     val xpIronAxe = ItemXpIronAxe()
     val xpIronHoe = ItemXpIronHoe()
     val xpIronSword = ItemXpIronSword()
+    //XpDiamond
+    val xpDiamondShovel = ItemXpDiamondShovel()
+    val xpDiamondPickaxe = ItemXpDiamondPickaxe()
+    val xpDiamondAxe = ItemXpDiamondAxe()
+    val xpDiamondHoe = ItemXpDiamondHoe()
+    val xpDiamondSword = ItemXpDiamondSword()
 
     //Blocks
     //Machines
@@ -113,7 +127,7 @@ object SolidXpRegistry {
     val fuelHandler = IFuelHandler { fuel ->
         if (fuel == null || fuel.isEmpty)
             return@IFuelHandler 0
-        when(fuel.item){
+        when (fuel.item) {
             xpCoal -> 3200
             xpFuel -> 12800
             xpFuelAdv -> 102400
@@ -142,6 +156,11 @@ object SolidXpRegistry {
         GameRegistry.register(xpIronAxe)
         GameRegistry.register(xpIronHoe)
         GameRegistry.register(xpIronSword)
+        GameRegistry.register(xpDiamondShovel)
+        GameRegistry.register(xpDiamondPickaxe)
+        GameRegistry.register(xpDiamondAxe)
+        GameRegistry.register(xpDiamondHoe)
+        GameRegistry.register(xpDiamondSword)
         //Blockの登録
         GameRegistry.register(xpInfuser)
         GameRegistry.register(xpChest)
@@ -179,6 +198,11 @@ object SolidXpRegistry {
             ModelLoader.setCustomModelResourceLocation(xpIronShovel, 0, getModelResourceLocation(xpIronShovel))
             ModelLoader.setCustomModelResourceLocation(xpIronHoe, 0, getModelResourceLocation(xpIronHoe))
             ModelLoader.setCustomModelResourceLocation(xpIronSword, 0, getModelResourceLocation(xpIronSword))
+            ModelLoader.setCustomModelResourceLocation(xpDiamondShovel, 0, getModelResourceLocation(xpDiamondShovel))
+            ModelLoader.setCustomModelResourceLocation(xpDiamondPickaxe, 0, getModelResourceLocation(xpDiamondPickaxe))
+            ModelLoader.setCustomModelResourceLocation(xpDiamondAxe, 0, getModelResourceLocation(xpDiamondAxe))
+            ModelLoader.setCustomModelResourceLocation(xpDiamondHoe, 0, getModelResourceLocation(xpDiamondHoe))
+            ModelLoader.setCustomModelResourceLocation(xpDiamondSword, 0, getModelResourceLocation(xpDiamondSword))
             ModelLoader.setCustomModelResourceLocation(xpInfuserIB, 0, getModelResourceLocation(xpInfuserIB))
             ModelLoader.setCustomModelResourceLocation(xpCoal, 0, getModelResourceLocation(xpCoal))
             ModelLoader.setCustomModelResourceLocation(xpFuel, 0, getModelResourceLocation(xpFuel))
@@ -213,8 +237,13 @@ object SolidXpRegistry {
         GameRegistry.addRecipe(xpIronAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpIron, 'S', Items.STICK)
         GameRegistry.addRecipe(xpIronHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpIron, 'S', Items.STICK)
         GameRegistry.addRecipe(xpIronSword.getEnchanted(), " I ", " I ", " S ", 'I', xpIron, 'S', Items.STICK)
+        GameRegistry.addRecipe(xpDiamondShovel.getEnchanted(), " I ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
+        GameRegistry.addRecipe(xpDiamondPickaxe.getEnchanted(), "III", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
+        GameRegistry.addRecipe(xpDiamondAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpDiamond, 'S', Items.STICK)
+        GameRegistry.addRecipe(xpDiamondHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
+        GameRegistry.addRecipe(xpDiamondSword.getEnchanted(), " I ", " I ", " S ", 'I', xpDiamond, 'S', Items.STICK)
         GameRegistry.addRecipe(ItemStack(xpMachineBasic), "III", "I I", "III", 'I', xpIron)
-        GameRegistry.addRecipe(ItemStack(xpExtractor),"III","GRG","D D",'I', Items.IRON_INGOT,'G',Items.GOLD_INGOT,'R', Blocks.REDSTONE_BLOCK,'D',Items.DIAMOND)
+        GameRegistry.addRecipe(ItemStack(xpExtractor), "III", "GRG", "D D", 'I', Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'D', Items.DIAMOND)
         GameRegistry.addRecipe(ItemStack(xpInfuser), "III", "RMR", "EEE", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'M', xpMachineBasic, 'E', xpIron)
         GameRegistry.addRecipe(ItemStack(xpChest), "WWW", "W W", "WWW", 'W', xpWoodPlank)
         GameRegistry.addRecipe(ItemStack(xpGlassPane, 16), "GGG", "GGG", 'G', xpGlass)
@@ -239,7 +268,7 @@ object SolidXpRegistry {
         //GUI Handlerの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(SolidXpCore.INSTANCE, SolidXpGuiHandler())
 
-        if (event.side.isClient){
+        if (event.side.isClient) {
             Minecraft.getMinecraft().renderItem.itemModelMesher.register(xpChest.getItemBlock(), 0, getModelResourceLocation(xpChest))
             ClientRegistry.bindTileEntitySpecialRenderer(TileXpChest::class.java, RenderXpChest())
         }
@@ -249,7 +278,7 @@ object SolidXpRegistry {
         return ModelResourceLocation(item.registryName!!, "inventory")
     }
 
-    private fun getModelResourceLocation(block: Block): ModelResourceLocation{
+    private fun getModelResourceLocation(block: Block): ModelResourceLocation {
         return getModelResourceLocation(block.getItemBlock())
     }
 }

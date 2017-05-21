@@ -29,6 +29,12 @@ item.XpIronAxe.name=経験値鉄の斧
 item.XpIronPickaxe.name=経験値鉄のツルハシ
 item.XpIronShovel.name=経験値鉄のシャベル
 item.XpIronHoe.name=経験値鉄のクワ
+item.XpDiamondSword.name=経験値ダイヤの剣
+item.XpDiamondAxe.name=経験値ダイヤの斧
+item.XpDiamondPickaxe.name=経験値ダイヤのツルハシ
+item.XpDiamondShovel.name=経験値ダイヤのシャベル
+item.XpDiamondHoe.name=経験値ダイヤのクワ
+item.XpDiamondSword.name=経験値ダイヤの剣
 # Other Items
 item.xpExtractor.name=経験値抽出器
 
