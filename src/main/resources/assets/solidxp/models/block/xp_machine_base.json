@@ -1,6 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/cube_column",
   "textures": {
-    "all": "solidxp:blocks/xp_machine_frame"
+    "end": "solidxp:blocks/xp_machine_frame",
+    "side": "solidxp:blocks/xp_machine_frame_yukari"
   }
 }

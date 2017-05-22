@@ -3,6 +3,6 @@
   "textures": {
     "top": "solidxp:blocks/xp_machine_frame",
     "front": "solidxp:blocks/xp_infuser",
-    "side": "solidxp:blocks/xp_machine_frame"
+    "side": "solidxp:blocks/xp_machine_frame_yukari"
   }
 }

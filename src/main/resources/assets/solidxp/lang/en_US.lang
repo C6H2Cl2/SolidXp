@@ -61,6 +61,7 @@ solidxp.gui.xp_chest=Xp Chest
 # Texts
 solidxp.text.xp_extractor=Extract %d Xps
 solidxp.text.not_enough_xp=You don't have enough Xp!
+solidxp.text.player_xp=Player Xp
 
 # Achievements
 achievement.solidxp.extractXp=Extract your Experience

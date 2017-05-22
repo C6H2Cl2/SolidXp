@@ -20,6 +20,7 @@ import c6h2cl2.solidxp.Item.Tools.ItemXpIronHoe
 import c6h2cl2.solidxp.Item.Tools.ItemXpIronPickaxe
 import c6h2cl2.solidxp.Item.Tools.ItemXpIronShovel
 import c6h2cl2.solidxp.Item.Tools.ItemXpIronSword
+import c6h2cl2.solidxp.Item.ItemXpChecker
 import c6h2cl2.solidxp.Render.RenderXpChest
 import c6h2cl2.solidxp.TileEntity.TileXpChest
 import c6h2cl2.solidxp.TileEntity.TileXpInfuser
@@ -76,6 +77,7 @@ object SolidXpRegistry {
     //Main
     val solidXp = ItemSolidXp()
     val xpExtractor = ItemXpExtractor()
+    val xpChecker = ItemXpChecker()
     //Tools
     //XpIron
     val xpIronShovel = ItemXpIronShovel()
@@ -151,6 +153,7 @@ object SolidXpRegistry {
         GameRegistry.register(xpFuel)
         GameRegistry.register(xpFuelAdv)
         GameRegistry.register(xpExtractor)
+        GameRegistry.register(xpChecker)
         GameRegistry.register(xpIronShovel)
         GameRegistry.register(xpIronPickaxe)
         GameRegistry.register(xpIronAxe)
@@ -193,6 +196,7 @@ object SolidXpRegistry {
             (0..15).forEach {
                 ModelLoader.setCustomModelResourceLocation(xpExtractor, it, getModelResourceLocation(xpExtractor))
             }
+            ModelLoader.setCustomModelResourceLocation(xpChecker, 0, getModelResourceLocation(xpChecker))
             ModelLoader.setCustomModelResourceLocation(xpIronAxe, 0, getModelResourceLocation(xpIronAxe))
             ModelLoader.setCustomModelResourceLocation(xpIronPickaxe, 0, getModelResourceLocation(xpIronPickaxe))
             ModelLoader.setCustomModelResourceLocation(xpIronShovel, 0, getModelResourceLocation(xpIronShovel))

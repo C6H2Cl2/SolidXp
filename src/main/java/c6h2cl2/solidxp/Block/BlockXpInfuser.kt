@@ -26,7 +26,7 @@ import net.minecraft.world.World
 /**
  * @author C6H2Cl2
  */
-class BlockXpInfuser : BlockContainer(Material.ROCK) {
+class BlockXpInfuser : BlockContainer(Material.ROCK), IXpHolderBlock {
 
     companion object {
         @JvmStatic
@@ -127,5 +127,15 @@ class BlockXpInfuser : BlockContainer(Material.ROCK) {
 
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, *arrayOf<IProperty<*>>(FACING))
+    }
+
+    override fun getUnlocalizedMachineName() = unlocalizedName + ".name"
+
+    override fun getXpLimit(world: World, pos: BlockPos): Long {
+        return (world.getTileEntity(pos) as TileXpInfuser).maxXp.toLong()
+    }
+
+    override fun getXpValue(world: World, pos: BlockPos): Long {
+        return (world.getTileEntity(pos) as TileXpInfuser).xpValue.toLong()
     }
 }
