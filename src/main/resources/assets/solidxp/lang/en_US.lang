@@ -37,6 +37,7 @@ item.XpDiamondHoe.name=XpDiamond Hoe
 item.XpDiamondSword.name=XpDiamond Sword
 # Other Items
 item.xpExtractor.name=Xp Extractor
+item.xpChecker.name=Xp Checker
 
 # Enchantments
 enchantment.xpBoost.WEAPON=Xp Boost

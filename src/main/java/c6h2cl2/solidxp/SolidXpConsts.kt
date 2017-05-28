@@ -23,7 +23,7 @@ import java.util.*
 const val SOLIDXP_TEXT = "solidxp.text"
 const val MOD_ID = "solidxp"
 const val MOD_NAME = "SolidXp"
-const val VERSION = "1.3.0-beta"
+const val VERSION = "1.3.0"
 const val INVENTORY = "tile.inventory"
 const val PROGRESS = "tile.progress"
 const val XP_STORAGE = "tile.xp_storage_value"

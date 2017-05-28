@@ -43,4 +43,9 @@ class ItemXpChecker : Item() {
         }
         return SUCCESS
     }
+
+    override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        tooltip.add("Right Click to see your experience")
+        tooltip.add("Using for Xp-Machines, you can see xp value in it")
+    }
 }

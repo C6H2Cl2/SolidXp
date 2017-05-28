@@ -48,6 +48,10 @@ class ItemXpExtractor : Item() {
         }
     }
 
+    override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        tooltip.add("Right click to extract your experience")
+        tooltip.add("Shift-RightClick to change xp value")
+    }
 
     fun getXpValue(meta: Int): Long {
         return Math.pow(4.0, meta.toDouble()).toLong() * 10L

@@ -37,6 +37,7 @@ item.XpDiamondHoe.name=経験値ダイヤのクワ
 item.XpDiamondSword.name=経験値ダイヤの剣
 # Other Items
 item.xpExtractor.name=経験値抽出器
+item.xpChecker.name=経験値検出機
 
 # Enchantments
 enchantment.xpBoost.WEAPON=経験値増加
@@ -60,6 +61,7 @@ solidxp.gui.xp_infuser=経験値注入器
 # Texts
 solidxp.text.xp_extractor=抽出量: %d Xp
 solidxp.text.not_enough_xp=経験値が足りません！
+solidxp.text.player_xp=プレイヤーの経験値
 
 # Achievements
 achievement.solidxp.extractXp=経験値の抽出
