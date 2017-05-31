@@ -24,14 +24,11 @@ const val SOLIDXP_TEXT = "solidxp.text"
 const val MOD_ID = "solidxp"
 const val MOD_NAME = "SolidXp"
 const val VERSION = "1.3.0"
-const val INVENTORY = "tile.inventory"
-const val PROGRESS = "tile.progress"
-const val XP_STORAGE = "tile.xp_storage_value"
-const val RECIPE_CACHE_ID = "tile.recipe_cache.id"
 
 //GUI ID
 const val GUI_INFUSER = 0
 const val GUI_XP_CHEST = 1
+const val GUI_XP_COLLECTOR = 2
 
 fun EntityPlayer.sendMessageOnlyServer(component: ITextComponent) {
     if (!world.isRemote) sendMessage(component)

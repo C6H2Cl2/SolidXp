@@ -1,29 +1,31 @@
 package c6h2cl2.solidxp
 
 import c6h2cl2.YukariLib.Util.ItemUtil
-import c6h2cl2.solidxp.Block.BlockXpChest
-import c6h2cl2.solidxp.Block.BlockXpGlass
-import c6h2cl2.solidxp.Block.BlockXpGlassPane
-import c6h2cl2.solidxp.Block.BlockXpInfuser
-import c6h2cl2.solidxp.Block.SimpleBlock
-import c6h2cl2.solidxp.Enchant.XpBoost
-import c6h2cl2.solidxp.Event.XpBoostEventHandler
-import c6h2cl2.solidxp.Item.ItemSolidXp
-import c6h2cl2.solidxp.Item.ItemXpExtractor
-import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondAxe
-import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondHoe
-import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondPickaxe
-import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondShovel
-import c6h2cl2.solidxp.Item.Tools.ItemXpDiamondSword
-import c6h2cl2.solidxp.Item.Tools.ItemXpIronAxe
-import c6h2cl2.solidxp.Item.Tools.ItemXpIronHoe
-import c6h2cl2.solidxp.Item.Tools.ItemXpIronPickaxe
-import c6h2cl2.solidxp.Item.Tools.ItemXpIronShovel
-import c6h2cl2.solidxp.Item.Tools.ItemXpIronSword
-import c6h2cl2.solidxp.Item.ItemXpChecker
-import c6h2cl2.solidxp.Render.RenderXpChest
-import c6h2cl2.solidxp.TileEntity.TileXpChest
-import c6h2cl2.solidxp.TileEntity.TileXpInfuser
+import c6h2cl2.solidxp.block.BlockXpChest
+import c6h2cl2.solidxp.block.BlockXpCollector
+import c6h2cl2.solidxp.block.BlockXpGlass
+import c6h2cl2.solidxp.block.BlockXpGlassPane
+import c6h2cl2.solidxp.block.BlockXpInfuser
+import c6h2cl2.solidxp.block.SimpleBlock
+import c6h2cl2.solidxp.enchant.XpBoost
+import c6h2cl2.solidxp.event.XpBoostEventHandler
+import c6h2cl2.solidxp.item.ItemSolidXp
+import c6h2cl2.solidxp.item.ItemXpExtractor
+import c6h2cl2.solidxp.item.Tools.ItemXpDiamondAxe
+import c6h2cl2.solidxp.item.Tools.ItemXpDiamondHoe
+import c6h2cl2.solidxp.item.Tools.ItemXpDiamondPickaxe
+import c6h2cl2.solidxp.item.Tools.ItemXpDiamondShovel
+import c6h2cl2.solidxp.item.Tools.ItemXpDiamondSword
+import c6h2cl2.solidxp.item.Tools.ItemXpIronAxe
+import c6h2cl2.solidxp.item.Tools.ItemXpIronHoe
+import c6h2cl2.solidxp.item.Tools.ItemXpIronPickaxe
+import c6h2cl2.solidxp.item.Tools.ItemXpIronShovel
+import c6h2cl2.solidxp.item.Tools.ItemXpIronSword
+import c6h2cl2.solidxp.item.ItemXpChecker
+import c6h2cl2.solidxp.render.RenderXpChest
+import c6h2cl2.solidxp.tileentity.TileXpChest
+import c6h2cl2.solidxp.tileentity.TileXpCollector
+import c6h2cl2.solidxp.tileentity.TileXpInfuser
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -95,6 +97,7 @@ object SolidXpRegistry {
     //Blocks
     //Machines
     val xpInfuser = BlockXpInfuser()
+    val xpCollector = BlockXpCollector()
     //Decorations
     val xpCobbleStone = SimpleBlock(Material.ROCK, "xpCobbleStone", "xp_cobblestone", 1.5f, 15f, 0.55f, "pickaxe", 0, SoundType.STONE)
     val xpStone = SimpleBlock(Material.ROCK, "xpStone", "xp_stone", 1.5f, 15f, 0.6f, "pickaxe", 0, SoundType.STONE)
@@ -166,6 +169,7 @@ object SolidXpRegistry {
         GameRegistry.register(xpDiamondSword)
         //Blockの登録
         GameRegistry.register(xpInfuser)
+        GameRegistry.register(xpCollector)
         GameRegistry.register(xpChest)
         GameRegistry.register(xpCobbleStone)
         GameRegistry.register(xpStone)
@@ -177,6 +181,7 @@ object SolidXpRegistry {
         //GameRegistry.register(xpStoneBrick)
         //ItemBlockの登録
         GameRegistry.register(xpInfuserIB)
+        GameRegistry.register(xpCollector.initItemBlock())
         GameRegistry.register(xpChest.initItemBlock())
         GameRegistry.register(xpCobbleStone.initItemBlock())
         GameRegistry.register(xpStone.initItemBlock())
@@ -220,6 +225,7 @@ object SolidXpRegistry {
             ModelLoader.setCustomModelResourceLocation(xpWoodPlank.getItemBlock(), 0, getModelResourceLocation(xpWoodPlank))
             ModelLoader.setCustomModelResourceLocation(xpChest.getItemBlock(), 0, getModelResourceLocation(xpChest))
             ModelLoader.setCustomModelResourceLocation(xpFuelBlock.getItemBlock(), 0, getModelResourceLocation(xpFuelBlock))
+            ModelLoader.setCustomModelResourceLocation(xpCollector.getItemBlock(), 0, getModelResourceLocation(xpCollector))
             /*(0..3).forEach {
                 ModelLoader.setCustomModelResourceLocation(xpStoneBrick.getItemBlock(), it, ModelResourceLocation(ResourceLocation(MOD_ID, "xp_stone_brick_${BlockStoneBrick.EnumType.byMetadata(it).unlocalizedName}"), "inventory"))
             }*/
@@ -265,6 +271,7 @@ object SolidXpRegistry {
         //TileEntityの登録
         GameRegistry.registerTileEntity(TileXpInfuser::class.java, ResourceLocation(MOD_ID, "xpInfuser").toString())
         GameRegistry.registerTileEntity(TileXpChest::class.java, ResourceLocation(MOD_ID, "xpChest").toString())
+        GameRegistry.registerTileEntity(TileXpCollector::class.java, ResourceLocation(MOD_ID, "xpCollector").toString())
         //Eventの登録
         MinecraftForge.EVENT_BUS.register(XpBoostEventHandler())
         //実績の登録

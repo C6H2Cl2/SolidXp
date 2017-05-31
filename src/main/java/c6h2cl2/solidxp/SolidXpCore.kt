@@ -1,6 +1,6 @@
 package c6h2cl2.solidxp
 
-import c6h2cl2.solidxp.Proxy.CommonProxy
+import c6h2cl2.solidxp.proxy.CommonProxy
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -20,7 +20,7 @@ class SolidXpCore {
 
     companion object {
         @JvmStatic
-        @SidedProxy(serverSide = "c6h2cl2.solidxp.Proxy.CommonProxy", clientSide = "c6h2cl2.solidxp.Proxy.ClientProxy")
+        @SidedProxy(serverSide = "c6h2cl2.solidxp.proxy.CommonProxy", clientSide = "c6h2cl2.solidxp.proxy.ClientProxy")
         var proxy: CommonProxy? = null
         @JvmStatic
         @Metadata(value = MOD_ID)

@@ -1,9 +1,11 @@
 package c6h2cl2.solidxp
 
-import c6h2cl2.solidxp.Gui.ContainerXpChest
-import c6h2cl2.solidxp.Gui.ContainerXpInfuser
-import c6h2cl2.solidxp.Gui.GuiXpChest
-import c6h2cl2.solidxp.Gui.GuiXpInfuser
+import c6h2cl2.solidxp.gui.ContainerXpChest
+import c6h2cl2.solidxp.gui.ContainerXpCollector
+import c6h2cl2.solidxp.gui.ContainerXpInfuser
+import c6h2cl2.solidxp.gui.GuiXpChest
+import c6h2cl2.solidxp.gui.GuiXpCollector
+import c6h2cl2.solidxp.gui.GuiXpInfuser
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -17,6 +19,7 @@ class SolidXpGuiHandler : IGuiHandler{
         return when(ID){
             GUI_INFUSER -> GuiXpInfuser(world, BlockPos(x, y, z), player.inventory)
             GUI_XP_CHEST -> GuiXpChest(world, BlockPos(x, y, z), player.inventory)
+            GUI_XP_COLLECTOR -> GuiXpCollector(world, BlockPos(x, y, z), player.inventory)
             else -> null
         }
     }
@@ -25,6 +28,7 @@ class SolidXpGuiHandler : IGuiHandler{
         return when(ID){
             GUI_INFUSER -> ContainerXpInfuser(world, BlockPos(x, y, z), player.inventory)
             GUI_XP_CHEST -> ContainerXpChest(world, BlockPos(x, y, z), player.inventory)
+            GUI_XP_COLLECTOR -> ContainerXpCollector(world, BlockPos(x, y, z), player.inventory)
             else -> null
         }
     }

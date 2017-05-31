@@ -58,6 +58,8 @@ tile.xpFuelBlock.name=Xp Fuel Block
 # Gui
 solidxp.gui.xp_infuser=Xp Infuser
 solidxp.gui.xp_chest=Xp Chest
+solidxp.gui.xp_collector.up=Up
+solidxp.gui.xp_collector.down=Down
 
 # Texts
 solidxp.text.xp_extractor=Extract %d Xps
