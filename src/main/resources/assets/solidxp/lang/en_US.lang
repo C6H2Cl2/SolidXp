@@ -54,6 +54,7 @@ tile.xpGlassPane.name=Xp Glass Pane
 tile.xpWoodPlank.name=Xp Wood Planks
 tile.xpChest.name=Xp Chest
 tile.xpFuelBlock.name=Xp Fuel Block
+tile.xpCollector.name=Xp Collector
 
 # Gui
 solidxp.gui.xp_infuser=Xp Infuser

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solidxp:blocks/xp_machine_frame",
+    "side": "solidxp:blocks/xp_collector"
+  }
+}

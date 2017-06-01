@@ -33,6 +33,7 @@ class SolidXpCore {
     @EventHandler
     fun preinit(event: FMLPreInitializationEvent) {
         SolidXpRegistry.handlePreInit(event)
+        PacketHandler.init()
         loadMeta()
         getConfig()
     }

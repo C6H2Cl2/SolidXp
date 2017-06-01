@@ -54,6 +54,7 @@ tile.xpGlassPane.name=経験値板ガラス
 tile.xpWoodPlank.name=経験値木材
 tile.xpChest.name=経験値チェスト
 tile.xpFuelBlock.name=†経験に満たされし業火を宿すもの†
+tile.xpCollector.name=経験値回収機
 
 # Gui
 solidxp.gui.xp_infuser=経験値注入器
