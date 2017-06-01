@@ -23,6 +23,8 @@ import net.minecraftforge.items.ItemStackHandler
 class TileXpCollector : TileEntity(), IInventory, ITickable {
 
     val inventory = (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.defaultInstance as ItemStackHandler)
+    var range = 4.0
+    var limit = 100
     var xpTier = 0
         set(value) {
             if (value in 0..15) {
@@ -39,7 +41,6 @@ class TileXpCollector : TileEntity(), IInventory, ITickable {
                 xpStorage += xp
             }
         }
-    val range = 4.0
     var xpStorage = 0L
         set(value) {
             if (value < 0) return
@@ -71,8 +72,11 @@ class TileXpCollector : TileEntity(), IInventory, ITickable {
         entities.forEach {
             totalXp += it.xpValue
             world.removeEntity(it)
+            if (totalXp >= limit){
+                return@forEach
+            }
         }
-        if (totalXp != 0L) {
+        if (totalXp != 0L || xpStorage > getXpValue(xpTier)) {
             xpStorage += totalXp
         }
     }
