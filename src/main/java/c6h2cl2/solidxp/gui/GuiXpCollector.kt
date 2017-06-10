@@ -29,7 +29,7 @@ class GuiXpCollector(world: World, pos: BlockPos, playerInventory: InventoryPlay
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         val s = TextComponentTranslation("$MOD_ID.gui.xp_infuser").formattedText
         fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 0, Color.BLACK.rgb)
-        val xp = getXpValue(tile.xpTier).toString()
+        val xp = getXpValue(tile.xpStorage.xpTier).toString()
         fontRendererObj.drawString(xp, 138 - (fontRendererObj.getStringWidth(xp) / 2.0f), 32.0f, Color.BLACK.rgb, false)
     }
 
@@ -43,8 +43,8 @@ class GuiXpCollector(world: World, pos: BlockPos, playerInventory: InventoryPlay
 
     override fun actionPerformed(button: GuiButton) {
         when (button.id) {
-            0 -> tile.xpTier++
-            1 -> tile.xpTier--
+            0 -> tile.xpStorage.xpTier++
+            1 -> tile.xpStorage.xpTier--
         }
         PacketHandler.INSTANCE.sendToServer(CMessageUpdateTileEntity(tile.updateTag, tile.pos))
     }

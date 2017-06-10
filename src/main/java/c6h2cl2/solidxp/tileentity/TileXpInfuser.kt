@@ -20,7 +20,7 @@ import net.minecraftforge.items.CapabilityItemHandler
 /**
  * @author C6H2Cl2
  */
-class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
+class TileXpInfuser : TileXpMachineBase(), ITickable, ISidedInventory {
     /**
      * Inventory
      * 0: Input Slot
@@ -30,11 +30,6 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
     val inventory = (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.defaultInstance as ItemStackHandler)
     var progress = 0f
         private set
-    var xpValue = 0
-        private set(value) {
-            field = minOf(value, maxXp)
-        }
-    val maxXp = 40960
     var xpRate = 2
         private set
     private var recipeCache: XpInfuserRecipe? = null
@@ -46,14 +41,24 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
 
     override fun update() {
         //ItemSolidXpを内蔵経験値に変換するナリ
-        if (inventory.getStackInSlot(2).item is ItemSolidXp && xpValue != maxXp) {
+        convertItemToXpStorage()
+        //加工処理
+        processInfusing()
+        markDirty()
+    }
+
+    private fun convertItemToXpStorage(){
+        if (inventory.getStackInSlot(2).item is ItemSolidXp && xpStorage.xpValue != xpStorage.maxXp) {
             val itemStack = inventory.getStackInSlot(2)
             val xp = (itemStack.item as ItemSolidXp).getXpValue(itemStack.metadata)
-            if (xpValue + xp <= maxXp) {
-                xpValue += xp.toInt()
+            if (xpStorage.xpValue + xp <= xpStorage.maxXp) {
+                xpStorage.xpValue += xp.toInt()
                 inventory.extractItem(2, 1, false)
             }
         }
+    }
+
+    private fun processInfusing(){
         val material = inventory.getStackInSlot(0)
         val output = inventory.getStackInSlot(1)
         if (material.isEmpty || recipeCache == null || !material.isItemEqual(recipeCache?.material)) {
@@ -61,14 +66,14 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
             recipeCache = null
         }
         if (recipeCache == null) {
-            if (xpValue < xpRate || !RecipeRegistry.isInfusingMaterial(material) || output.maxStackSize == output.count)
+            if (xpStorage.xpValue < xpRate || !RecipeRegistry.isInfusingMaterial(material) || output.maxStackSize == output.count)
                 return
             recipeCache = RecipeRegistry.getXpInfuserRecipe(material)
         }
         val recipe = recipeCache as XpInfuserRecipe
-        if (output.isEmpty || recipe.output.isItemEqual(output)) {
+        if ((output.isEmpty || recipe.output.isItemEqual(output)) && xpStorage.xpValue >= xpRate) {
             progress += xpRate / recipe.xp.toFloat()
-            xpValue -= xpRate
+            xpStorage.xpValue -= xpRate
         }
         if (progress >= 1) {
             progress = 0f
@@ -78,32 +83,28 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
                 recipeCache = null
             }
         }
-        markDirty()
     }
 
     // Template Overrides ===========================================================================================================================
 
 
-    override fun writeToNBT(compound: NBTTagCompound?): NBTTagCompound {
+    override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
         val tag = super.writeToNBT(compound)
         tag.setTag(INVENTORY, inventory.serializeNBT())
         tag.setFloat(PROGRESS, progress)
-        tag.setInteger(XP_STORAGE, xpValue)
         if (recipeCache != null)
             tag.setInteger(RECIPE_CACHE_ID, recipeCache!!.id)
         return tag
     }
 
-    override fun readFromNBT(compound: NBTTagCompound) {
+    override fun readFromNBT(compound: NBTTagCompound?) {
         super.readFromNBT(compound)
+        compound ?: return
         if (compound.hasKey(INVENTORY)) {
             inventory.deserializeNBT(compound.getTag(INVENTORY) as NBTTagCompound)
         }
         if (compound.hasKey(PROGRESS)) {
             progress = compound.getFloat(PROGRESS)
-        }
-        if (compound.hasKey(XP_STORAGE)) {
-            xpValue = compound.getInteger(XP_STORAGE)
         }
         if (compound.hasKey(RECIPE_CACHE_ID))
             recipeCache = RecipeRegistry.getXpInfuserRecipe(compound.getInteger(RECIPE_CACHE_ID))
@@ -115,25 +116,7 @@ class TileXpInfuser : TileEntity(), ITickable, ISidedInventory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
-        return when (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY == capability) {
-            true -> inventory as T
-            false -> super.getCapability(capability, facing)
-        }
-    }
-
-    override fun getUpdateTag(): NBTTagCompound {
-        return writeToNBT(NBTTagCompound())
-    }
-
-    override fun getUpdatePacket(): SPacketUpdateTileEntity {
-        return SPacketUpdateTileEntity(getPos(), 0, updateTag)
-    }
-
-    override fun onDataPacket(net: NetworkManager?, pkt: SPacketUpdateTileEntity?) {
-        super.onDataPacket(net, pkt)
-        if (pkt != null) {
-            readFromNBT(pkt.nbtCompound)
-        }
+        return if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY == capability) inventory as T else super.getCapability(capability, facing)
     }
 
     // ISidedInventory Impl =========================================================================================================================

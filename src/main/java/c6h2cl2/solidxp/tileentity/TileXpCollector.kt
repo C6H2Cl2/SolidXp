@@ -7,9 +7,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.NetworkManager
-import net.minecraft.network.play.server.SPacketUpdateTileEntity
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
 import net.minecraft.util.math.AxisAlignedBB
@@ -20,65 +17,50 @@ import net.minecraftforge.items.ItemStackHandler
 /**
  * @author C6H2Cl2
  */
-class TileXpCollector : TileEntity(), IInventory, ITickable {
+class TileXpCollector : TileXpMachineBase(), IInventory, ITickable {
 
     val inventory = (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.defaultInstance as ItemStackHandler)
     var range = 4.0
     var limit = 100
-    var xpTier = 0
-        set(value) {
-            if (value in 0..15) {
-                val itemStack = inventory.getStackInSlot(0)
-                val xp: Long
-                if (itemStack.item == SolidXpRegistry.solidXp) {
-                    val xpValue = getXpValue(itemStack.metadata)
-                    xp = inventory.getStackInSlot(0).count * xpValue
-                    inventory.setStackInSlot(0, ItemStack.EMPTY)
-                } else {
-                    xp = 0
-                }
-                field = value
-                xpStorage += xp
-            }
-        }
-    var xpStorage = 0L
-        set(value) {
-            if (value < 0) return
-            field = value
-            val xpValue = getXpValue(xpTier)
-            var count = 0
-            while (field >= getXpValue(xpTier)) {
-                count++
-                field -= xpValue
-                if (count >= 64) {
-                    break
-                }
-            }
-            if (count > 0) {
-                val itemStack = inventory.insertItem(0, ItemStack(SolidXpRegistry.solidXp, count, xpTier), false)
-                if (itemStack != ItemStack.EMPTY) {
-                    field += xpValue * itemStack.count
-                }
-            }
-        }
-
     init {
         inventory.setSize(1)
     }
 
     override fun update() {
+        //経験値オーブの取得
         val entities = world.getEntitiesWithinAABB(EntityXPOrb::class.java, AxisAlignedBB(pos.x - range, pos.y - range, pos.z - range, pos.x + range, pos.y + range, pos.z + range))
         var totalXp = 0L
+        //経験値オーブの経験値の総量をカウント
         entities.forEach {
             totalXp += it.xpValue
             world.removeEntity(it)
-            if (totalXp >= limit){
+            if (totalXp >= limit) {
                 return@forEach
             }
         }
-        if (totalXp != 0L || xpStorage > getXpValue(xpTier)) {
-            xpStorage += totalXp
+        totalXp += xpStorage.xpValue
+        val stack = inventory.getStackInSlot(0)
+        val xpValue = getXpValue(xpStorage.xpTier)
+        //XpTierが変わっていた場合、変換
+        if (stack.metadata != xpStorage.xpTier) {
+            totalXp += getXpValue(stack.metadata) * stack.count
+            inventory.setStackInSlot(0, ItemStack.EMPTY)
         }
+        //追加するItemの数
+        var count = 0
+        while (totalXp >= xpValue && count < 64) {
+            count++
+            totalXp -= xpValue
+        }
+        //Itemの追加処理
+        if (count != 0) {
+            val itemStack = inventory.insertItem(0, ItemStack(SolidXpRegistry.solidXp, count, xpStorage.xpTier), false)
+            //余剰分は経験値に戻しましょうねー
+            if (itemStack != ItemStack.EMPTY) {
+                totalXp += xpValue * itemStack.count
+            }
+        }
+        xpStorage.xpValue = totalXp
     }
 
     // Template Overrides ===========================================================================================================================
@@ -90,31 +72,13 @@ class TileXpCollector : TileEntity(), IInventory, ITickable {
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
         compound.setTag(INVENTORY, inventory.serializeNBT())
-        compound.setInteger(XP_TIER, xpTier)
-        compound.setLong(XP_STORAGE, xpStorage)
         return super.writeToNBT(compound)
     }
 
-    override fun readFromNBT(compound: NBTTagCompound) {
+    override fun readFromNBT(compound: NBTTagCompound?) {
+        compound ?: return
         inventory.deserializeNBT(compound.getTag(INVENTORY) as NBTTagCompound)
-        xpStorage = compound.getLong(XP_STORAGE)
-        xpTier = compound.getInteger(XP_TIER)
         super.readFromNBT(compound)
-    }
-
-    override fun getUpdateTag(): NBTTagCompound {
-        return writeToNBT(NBTTagCompound())
-    }
-
-    override fun getUpdatePacket(): SPacketUpdateTileEntity {
-        return SPacketUpdateTileEntity(getPos(), 0, updateTag)
-    }
-
-    override fun onDataPacket(net: NetworkManager?, pkt: SPacketUpdateTileEntity?) {
-        super.onDataPacket(net, pkt)
-        if (pkt != null) {
-            readFromNBT(pkt.nbtCompound)
-        }
     }
 
     // IInventory Impl ==============================================================================================================================

@@ -58,6 +58,7 @@ tile.xpCollector.name=経験値回収機
 
 # Gui
 solidxp.gui.xp_infuser=経験値注入器
+solidxp.gui.xp_chest=経験値チェスト
 
 # Texts
 solidxp.text.xp_extractor=抽出量: %d Xp

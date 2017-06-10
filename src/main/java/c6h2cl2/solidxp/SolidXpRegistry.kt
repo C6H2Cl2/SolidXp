@@ -7,6 +7,8 @@ import c6h2cl2.solidxp.block.BlockXpGlass
 import c6h2cl2.solidxp.block.BlockXpGlassPane
 import c6h2cl2.solidxp.block.BlockXpInfuser
 import c6h2cl2.solidxp.block.SimpleBlock
+import c6h2cl2.solidxp.capability.IXpStorage
+import c6h2cl2.solidxp.capability.XpStorage
 import c6h2cl2.solidxp.enchant.XpBoost
 import c6h2cl2.solidxp.event.XpBoostEventHandler
 import c6h2cl2.solidxp.item.ItemSolidXp
@@ -48,8 +50,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.nbt.NBTBase
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.EnumFacing
+import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.capabilities.Capability.IStorage
+import net.minecraftforge.common.capabilities.CapabilityInject
+import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.IFuelHandler
+import java.util.concurrent.*
 
 
 /**
@@ -141,6 +151,11 @@ object SolidXpRegistry {
         }
     }
 
+    //Capability
+    @JvmStatic
+    @CapabilityInject(IXpStorage::class)
+    lateinit var XP_STORAGE_CAPABILITY: Capability<IXpStorage>
+
     init {
         xpBoost.set(WEAPON, XpBoost(WEAPON))
         xpBoost.set(DIGGER, XpBoost(DIGGER))
@@ -230,6 +245,20 @@ object SolidXpRegistry {
                 ModelLoader.setCustomModelResourceLocation(xpStoneBrick.getItemBlock(), it, ModelResourceLocation(ResourceLocation(MOD_ID, "xp_stone_brick_${BlockStoneBrick.EnumType.byMetadata(it).unlocalizedName}"), "inventory"))
             }*/
         }
+
+        //Capabilityの登録
+        CapabilityManager.INSTANCE.register(IXpStorage::class.java,
+                object : IStorage<IXpStorage> {
+                    override fun readNBT(capability: Capability<IXpStorage>, instance: IXpStorage, side: EnumFacing?, nbt: NBTBase?) {
+                        val tag = nbt as? NBTTagCompound ?: return
+                        instance.deserializeNBT(tag)
+                    }
+
+                    override fun writeNBT(capability: Capability<IXpStorage>, instance: IXpStorage, side: EnumFacing?): NBTBase? {
+                        return instance.serializeNBT()
+                    }
+                }
+        ) { XpStorage() }
     }
 
     fun handleInit(event: FMLInitializationEvent) {

@@ -26,7 +26,7 @@ import net.minecraft.world.World
 /**
  * @author C6H2Cl2
  */
-class BlockXpInfuser : BlockContainer(Material.ROCK), IXpHolderBlock {
+class BlockXpInfuser : BlockXpMachineBase<TileXpInfuser>(Material.ROCK, TileXpInfuser::class.java, guiId = GUI_INFUSER), IXpHolderBlock {
 
     companion object {
         @JvmStatic
@@ -38,26 +38,6 @@ class BlockXpInfuser : BlockContainer(Material.ROCK), IXpHolderBlock {
         registryName = ResourceLocation(MOD_ID, "xp_infuser")
         setCreativeTab(SolidXpRegistry.tabSolidXp)
         defaultState = blockState.baseState.withProperty(FACING, NORTH)
-    }
-
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        playerIn.openGui(SolidXpCore.INSTANCE, GUI_INFUSER, worldIn, pos.x, pos.y, pos.z)
-        return true
-    }
-
-    override fun createNewTileEntity(worldIn: World?, meta: Int): TileEntity? {
-        return TileXpInfuser()
-    }
-
-    override fun getRenderType(state: IBlockState?) = MODEL
-
-    override fun breakBlock(world: World, pos: BlockPos, state: IBlockState) {
-        val tile = world.getTileEntity(pos)
-        if (tile is TileXpInfuser) {
-            InventoryHelper.dropInventoryItems(world, pos, tile)
-            world.updateComparatorOutputLevel(pos, this)
-        }
-        super.breakBlock(world, pos, state)
     }
 
     override fun onBlockAdded(world: World, pos: BlockPos, state: IBlockState) {
@@ -127,15 +107,5 @@ class BlockXpInfuser : BlockContainer(Material.ROCK), IXpHolderBlock {
 
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, *arrayOf<IProperty<*>>(FACING))
-    }
-
-    override fun getUnlocalizedMachineName() = unlocalizedName + ".name"
-
-    override fun getXpLimit(world: World, pos: BlockPos): Long {
-        return (world.getTileEntity(pos) as TileXpInfuser).maxXp.toLong()
-    }
-
-    override fun getXpValue(world: World, pos: BlockPos): Long {
-        return (world.getTileEntity(pos) as TileXpInfuser).xpValue.toLong()
     }
 }

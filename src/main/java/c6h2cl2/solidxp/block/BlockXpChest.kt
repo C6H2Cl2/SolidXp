@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 class BlockXpChest : BlockContainer(Material.WOOD) {
     companion object {
         @JvmStatic
-        private val FACING = BlockHorizontal.FACING
+        private val FACING = BlockHorizontal.FACING!!
     }
 
     private val AABB = AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.875, 0.9375)
@@ -73,8 +73,6 @@ class BlockXpChest : BlockContainer(Material.WOOD) {
     }
 
     override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) {
-        if (placer is EntityPlayer)
-            placer.addStat(SolidXpRegistry.achievementPutXpInfuser)
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.horizontalFacing.opposite), 2)
     }
 

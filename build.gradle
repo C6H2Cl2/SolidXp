@@ -2,7 +2,7 @@
 buildscript {
     ext.kotlin_version = '1.1.2-2'
     ext.mc_version = '1.11.2'
-    ext.jei_version = '4.2.10.248'
+    ext.jei_version = '4.3.5.277'
     repositories {
         jcenter()
         maven {
@@ -55,7 +55,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile 'yukarilib:YukariLib-1.11:release:dev'
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    compile "mezz.jei:jei_${mc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 }
 
@@ -77,7 +77,4 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
-}
-repositories {
-    mavenCentral()
 }

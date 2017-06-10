@@ -12,6 +12,7 @@ import net.minecraft.inventory.EntityEquipmentSlot.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.translation.I18n
 import net.minecraft.world.World
@@ -44,20 +45,29 @@ fun EntityPlayer.addAndSpawnXpOrb(value: Long, world: World) {
     over += Math.max(0, experienceTotal + xp - Int.MAX_VALUE)
     addExperience((value - over).toInt())
     if (over > 0 && !world.isRemote) {
-        if (over > SolidXpCore.numXpOrb) {
-            val reminder = over % SolidXpCore.numXpOrb
-            over -= reminder
-            val xpPerOrb = (over / SolidXpCore.numXpOrb).toInt()
-            (0..15).forEach {
-                world.spawnEntity(EntityXPOrb(world, posX, posY, posZ, xpPerOrb))
-            }
-            world.spawnEntity(EntityXPOrb(world, posX, posY, posZ, reminder.toInt()))
-        } else {
-            (0 until over).forEach {
-                world.spawnEntity(EntityXPOrb(world, posX, posY, posZ, 1))
-            }
+        world.spawnXpOrb(over, posX, posY, posZ)
+    }
+}
+
+fun World.spawnXpOrb(value: Long, posX: Double, posY: Double, posZ: Double){
+    var xp = value
+    if (xp > SolidXpCore.numXpOrb) {
+        val reminder = xp % SolidXpCore.numXpOrb
+        xp -= reminder
+        val xpPerOrb = (xp / SolidXpCore.numXpOrb).toInt()
+        (0..15).forEach {
+            spawnEntity(EntityXPOrb(this, posX, posY, posZ, xpPerOrb))
+        }
+        spawnEntity(EntityXPOrb(this, posX, posY, posZ, reminder.toInt()))
+    } else {
+        (0 until xp).forEach {
+            spawnEntity(EntityXPOrb(this, posX, posY, posZ, 1))
         }
     }
+}
+
+fun World.spawnXpOrb(value: Long, pos: BlockPos){
+    spawnXpOrb(value, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
 }
 
 fun EntityPlayer.extractExperience(amount: Int) {

@@ -30,7 +30,7 @@ class GuiXpInfuser(world: World, pos: BlockPos, playerInventory: InventoryPlayer
         val j = (width - xSize) / 2
         val k = (height - ySize) / 2
         drawTexturedModalRect(j, k, 0, 0, xSize, ySize)
-        val bar = 50 * tile.xpValue / tile.maxXp
+        val bar = (50 * tile.xpStorage.xpValue / tile.xpStorage.maxXp).toInt()
         drawTexturedModalRect(j + 158, k + 56 - bar, 177, 0, 4, bar)
         drawTexturedModalRect(j + 72, k + 34, 176, 51, Math.floor(24.0 * tile.progress).toInt() + 1, 16)
     }
