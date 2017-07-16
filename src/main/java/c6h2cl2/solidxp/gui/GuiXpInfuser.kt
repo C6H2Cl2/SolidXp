@@ -22,7 +22,7 @@ class GuiXpInfuser(world: World, pos: BlockPos, playerInventory: InventoryPlayer
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         val s = TextComponentTranslation("$MOD_ID.gui.xp_infuser").formattedText
-        fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, Color.BLACK.rgb)
+        fontRenderer.drawString(s, xSize / 2 - fontRenderer.getStringWidth(s) / 2, 6, Color.BLACK.rgb)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {

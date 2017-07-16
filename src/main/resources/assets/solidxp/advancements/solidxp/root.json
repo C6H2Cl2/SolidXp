@@ -1,0 +1,17 @@
+{
+	"display": {
+		"title": "SolidXp",
+		"description": "Advancements of SolidXp mod",
+		"icon": {
+			"item": "solidxp:solidxp",
+			"data": 12
+		},
+		"background": "solidxp:textures/blocks/xp_machine_frame_yukari.png",
+		"frame": "task"
+	},
+	"criteria": {
+		"getXp": {
+			"trigger": "solidxp:getXp"
+		}
+	}
+}

@@ -28,17 +28,17 @@ class GuiXpCollector(world: World, pos: BlockPos, playerInventory: InventoryPlay
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         val s = TextComponentTranslation("$MOD_ID.gui.xp_infuser").formattedText
-        fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 0, Color.BLACK.rgb)
+        fontRenderer.drawString(s, xSize / 2 - fontRenderer.getStringWidth(s) / 2, 0, Color.BLACK.rgb)
         val xp = getXpValue(tile.xpStorage.xpTier).toString()
-        fontRendererObj.drawString(xp, 138 - (fontRendererObj.getStringWidth(xp) / 2.0f), 32.0f, Color.BLACK.rgb, false)
+        fontRenderer.drawString(xp, 138 - (fontRenderer.getStringWidth(xp) / 2.0f), 32.0f, Color.BLACK.rgb, false)
     }
 
     override fun initGui() {
         super.initGui()
         var s = "+"
-        addButton(GuiButton(0, 255 - (fontRendererObj.getStringWidth(s) / 2), 40, 20, 20, s))
+        addButton(GuiButton(0, 255 - (fontRenderer.getStringWidth(s) / 2), 40, 20, 20, s))
         s = "-"
-        addButton(GuiButton(1, 255 - (fontRendererObj.getStringWidth(s) / 2), 85, 20, 20, s))
+        addButton(GuiButton(1, 255 - (fontRenderer.getStringWidth(s) / 2), 85, 20, 20, s))
     }
 
     override fun actionPerformed(button: GuiButton) {

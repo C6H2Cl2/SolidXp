@@ -4,6 +4,7 @@ import c6h2cl2.solidxp.block.IXpHolderBlock
 import c6h2cl2.solidxp.MOD_ID
 import c6h2cl2.solidxp.SolidXpRegistry
 import c6h2cl2.solidxp.translateToLocal
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -17,6 +18,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
+import javax.annotation.Nullable
 
 /**
  * @author C6H2Cl2
@@ -44,7 +46,7 @@ class ItemXpChecker : Item() {
         return SUCCESS
     }
 
-    override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+    override fun addInformation(stack: ItemStack, @Nullable worldIn: World?, tooltip: MutableList<String>, advanced: ITooltipFlag?) {
         tooltip.add("Right Click to see your experience")
         tooltip.add("Using for Xp-Machines, you can see xp value in it")
     }

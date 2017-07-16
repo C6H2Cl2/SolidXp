@@ -41,8 +41,8 @@ object RecipeRegistry {
         xpInfuserRecipes.add(recipe)
     }
 
-    fun addXpInfuserRecipe(material: ItemStack, output: ItemStack, xp: Int) {
-        addXpInfuserRecipe(XpInfuserRecipe(material, output, xp))
+    fun addXpInfuserRecipe(material: ItemStack, output: ItemStack, xp: Int, isOreRecipe: Boolean = false) {
+        addXpInfuserRecipe(XpInfuserRecipe(material, output, xp, isOreRecipe))
     }
 
     fun getXpInfuserRecipe(materialItem: ItemStack): XpInfuserRecipe {
@@ -62,7 +62,7 @@ object RecipeRegistry {
         var id: Int
     }
 
-    class XpInfuserRecipe(val material: ItemStack, val output: ItemStack, val xp: Int) : ISolidXpRecipe {
+    class XpInfuserRecipe(val material: ItemStack, val output: ItemStack, val xp: Int, val isOreRecipe: Boolean = false) : ISolidXpRecipe {
         override var id = Int.MIN_VALUE
             set(value) {
                 if (field == Int.MIN_VALUE) {

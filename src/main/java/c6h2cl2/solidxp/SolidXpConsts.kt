@@ -25,6 +25,7 @@ const val SOLIDXP_TEXT = "solidxp.text"
 const val MOD_ID = "solidxp"
 const val MOD_NAME = "SolidXp"
 const val VERSION = "1.4.0-beta"
+const val ADVANCEMENT = "$MOD_ID.advancements"
 
 //GUI ID
 const val GUI_INFUSER = 0

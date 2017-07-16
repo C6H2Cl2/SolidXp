@@ -1,6 +1,7 @@
 package c6h2cl2.solidxp
 
 import c6h2cl2.YukariLib.Util.ItemUtil
+import c6h2cl2.solidxp.advancements.critereon.XpTrigger
 import c6h2cl2.solidxp.block.BlockXpChest
 import c6h2cl2.solidxp.block.BlockXpCollector
 import c6h2cl2.solidxp.block.BlockXpGlass
@@ -28,6 +29,14 @@ import c6h2cl2.solidxp.render.RenderXpChest
 import c6h2cl2.solidxp.tileentity.TileXpChest
 import c6h2cl2.solidxp.tileentity.TileXpCollector
 import c6h2cl2.solidxp.tileentity.TileXpInfuser
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementRewards
+import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.advancements.Criterion
+import net.minecraft.advancements.DisplayInfo
+import net.minecraft.advancements.FrameType.*
+import net.minecraft.advancements.ICriterionTrigger
+import net.minecraft.advancements.critereon.ImpossibleTrigger
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -39,10 +48,8 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.stats.Achievement
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.ModelLoader
-import net.minecraftforge.common.AchievementPage
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -50,16 +57,30 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.command.FunctionObject
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.item.crafting.IRecipe
 import net.minecraft.nbt.NBTBase
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.text.TextComponentTranslation
+import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
-import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.common.capabilities.CapabilityManager.INSTANCE
+import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.event.RegistryEvent.Register
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.IFuelHandler
-import java.util.concurrent.*
+import net.minecraftforge.fml.common.asm.transformers.DeobfuscationTransformer
+import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.relauncher.ReflectionHelper
+import net.minecraftforge.fml.relauncher.Side.CLIENT
+import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraftforge.oredict.ShapedOreRecipe
+import net.minecraftforge.oredict.ShapelessOreRecipe
 
 
 /**
@@ -73,6 +94,10 @@ object SolidXpRegistry {
             return ItemStack(solidXp, 1, 14)
         }
     }
+
+    //Criteria
+    //@JvmStatic
+    val GET_XP = XpTrigger()
 
     //ToolMaterial
     val materialXpIron = EnumHelper.addToolMaterial("xpIron", 2, 400, 7.2f, 2.5f, 16)
@@ -128,16 +153,59 @@ object SolidXpRegistry {
     val xpBoost = HashMap<EnumEnchantmentType, XpBoost>()
 
     //Achievements
-    val achievementExtractXp = Achievement("$MOD_ID.extractXp", "$MOD_ID.extractXp", 0, 0, ItemStack(solidXp, 1, 1), null).registerStat()!!
+    /*val achievementExtractXp = Achievement("$MOD_ID.extractXp", "$MOD_ID.extractXp", 0, 0, ItemStack(solidXp, 1, 1), null).registerStat()!!
     val achievementCraftXpIronPickaxe = Achievement("$MOD_ID.craftXpIronPickaxe", "$MOD_ID.craftXpIronPickaxe", 0, 2, xpIronPickaxe, achievementExtractXp).registerStat()!!
     val achievementCraftXpIronSword = Achievement("$MOD_ID.craftXpIronSword", "$MOD_ID.craftXpIronSword", 1, 2, xpIronSword, achievementExtractXp).registerStat()!!
     val achievementCraftXpIronHoe = Achievement("$MOD_ID.craftXpIronHoe", "$MOD_ID.craftXpIronHoe", -1, 2, xpIronHoe, achievementExtractXp).registerStat()!!
-    val achievementPutXpInfuser = Achievement("$MOD_ID.putXpInfuser", "$MOD_ID.putXpInfuser", 2, 0, xpInfuserIB, achievementExtractXp).registerStat()!!
+    val achievementPutXpInfuser = Achievement("$MOD_ID.putXpInfuser", "$MOD_ID.putXpInfuser", 2, 0, xpInfuserIB, achievementExtractXp).registerStat()!!*/
+
+    //Advancements
+    val adcanvementExtractXp = Advancement(
+            //AdvancementのID
+            ResourceLocation(MOD_ID, "extractXp"),
+            //親Advancement
+            null,
+            //ディスプレイへの表示の情報
+            DisplayInfo(
+                    //表示するItemStack
+                    ItemStack(solidXp, 1, 1),
+                    //ToolTipに表示するAdvancementsの名前
+                    TextComponentTranslation("$ADVANCEMENT.extractXp"),
+                    //ToolTipに表示するAdvancementsの説明
+                    TextComponentTranslation("$ADVANCEMENT.extractXp.desc"),
+                    //root.json用:ページ背景のテクスチャ
+                    ResourceLocation(MOD_ID, "xp_machine_base"),
+                    //Frameの形
+                    TASK,
+                    //トースト表示の可否
+                    true,
+                    //チャットに表示するか否か
+                    true,
+                    //解除するまで隠されているか
+                    false
+            ),
+            //報酬
+            AdvancementRewards(
+                    //経験値
+                    10,
+                    //報酬のアイテムのLootTableのリソロケ
+                    emptyArray(),
+                    //報酬のレシピのリソロケ
+                    emptyArray(),
+                    //達成時に実行されるFunctionObject
+                    FunctionObject.CacheableFunction(null as ResourceLocation?)
+            ),
+            //達成基準(Criterion)と名前(String)のMap<String, Criterion>
+            mapOf(Pair("xp", Criterion(ImpossibleTrigger.Instance()))),
+            //全達成基準名の列挙
+            emptyArray()
+    )
 
     //AchievementPage
+    /*
     val achievementPageSolidXp = AchievementPage("SolidXp", achievementExtractXp,
             achievementCraftXpIronSword, achievementCraftXpIronPickaxe, achievementCraftXpIronHoe,
-            achievementPutXpInfuser)
+            achievementPutXpInfuser)*/
 
     val fuelHandler = IFuelHandler { fuel ->
         if (fuel == null || fuel.isEmpty)
@@ -162,92 +230,119 @@ object SolidXpRegistry {
         xpCobbleStone.setHarvestLevel("pickaxe", 0)
     }
 
-    fun handlePreInit(event: FMLPreInitializationEvent) {
-        //Itemの登録
-        GameRegistry.register(solidXp)
-        GameRegistry.register(xpIron)
-        GameRegistry.register(xpDiamond)
-        GameRegistry.register(xpCoal)
-        GameRegistry.register(xpFuel)
-        GameRegistry.register(xpFuelAdv)
-        GameRegistry.register(xpExtractor)
-        GameRegistry.register(xpChecker)
-        GameRegistry.register(xpIronShovel)
-        GameRegistry.register(xpIronPickaxe)
-        GameRegistry.register(xpIronAxe)
-        GameRegistry.register(xpIronHoe)
-        GameRegistry.register(xpIronSword)
-        GameRegistry.register(xpDiamondShovel)
-        GameRegistry.register(xpDiamondPickaxe)
-        GameRegistry.register(xpDiamondAxe)
-        GameRegistry.register(xpDiamondHoe)
-        GameRegistry.register(xpDiamondSword)
-        //Blockの登録
-        GameRegistry.register(xpInfuser)
-        GameRegistry.register(xpCollector)
-        GameRegistry.register(xpChest)
-        GameRegistry.register(xpCobbleStone)
-        GameRegistry.register(xpStone)
-        GameRegistry.register(xpMachineBasic)
-        GameRegistry.register(xpGlass)
-        GameRegistry.register(xpGlassPane)
-        GameRegistry.register(xpWoodPlank)
-        GameRegistry.register(xpFuelBlock)
-        //GameRegistry.register(xpStoneBrick)
-        //ItemBlockの登録
-        GameRegistry.register(xpInfuserIB)
-        GameRegistry.register(xpCollector.initItemBlock())
-        GameRegistry.register(xpChest.initItemBlock())
-        GameRegistry.register(xpCobbleStone.initItemBlock())
-        GameRegistry.register(xpStone.initItemBlock())
-        GameRegistry.register(xpMachineBasic.initItemBlock())
-        GameRegistry.register(xpGlass.initItemBlock())
-        GameRegistry.register(xpGlassPane.initItemBlock())
-        GameRegistry.register(xpWoodPlank.initItemBlock())
-        GameRegistry.register(xpFuelBlock.initItemBlock())
-        //GameRegistry.register(xpStoneBrick.initItemBlock())
-        if (event.side.isClient) {
-            //ItemのRender登録
-            ModelLoader.setCustomModelResourceLocation(xpIron, 0, getModelResourceLocation(xpIron))
-            ModelLoader.setCustomModelResourceLocation(xpDiamond, 0, getModelResourceLocation(xpDiamond))
-            (0..15).forEach {
-                ModelLoader.setCustomModelResourceLocation(solidXp, it, ModelResourceLocation(ResourceLocation(MOD_ID, "solidxp_$it"), "inventory"))
-            }
-            (0..15).forEach {
-                ModelLoader.setCustomModelResourceLocation(xpExtractor, it, getModelResourceLocation(xpExtractor))
-            }
-            ModelLoader.setCustomModelResourceLocation(xpChecker, 0, getModelResourceLocation(xpChecker))
-            ModelLoader.setCustomModelResourceLocation(xpIronAxe, 0, getModelResourceLocation(xpIronAxe))
-            ModelLoader.setCustomModelResourceLocation(xpIronPickaxe, 0, getModelResourceLocation(xpIronPickaxe))
-            ModelLoader.setCustomModelResourceLocation(xpIronShovel, 0, getModelResourceLocation(xpIronShovel))
-            ModelLoader.setCustomModelResourceLocation(xpIronHoe, 0, getModelResourceLocation(xpIronHoe))
-            ModelLoader.setCustomModelResourceLocation(xpIronSword, 0, getModelResourceLocation(xpIronSword))
-            ModelLoader.setCustomModelResourceLocation(xpDiamondShovel, 0, getModelResourceLocation(xpDiamondShovel))
-            ModelLoader.setCustomModelResourceLocation(xpDiamondPickaxe, 0, getModelResourceLocation(xpDiamondPickaxe))
-            ModelLoader.setCustomModelResourceLocation(xpDiamondAxe, 0, getModelResourceLocation(xpDiamondAxe))
-            ModelLoader.setCustomModelResourceLocation(xpDiamondHoe, 0, getModelResourceLocation(xpDiamondHoe))
-            ModelLoader.setCustomModelResourceLocation(xpDiamondSword, 0, getModelResourceLocation(xpDiamondSword))
-            ModelLoader.setCustomModelResourceLocation(xpInfuserIB, 0, getModelResourceLocation(xpInfuserIB))
-            ModelLoader.setCustomModelResourceLocation(xpCoal, 0, getModelResourceLocation(xpCoal))
-            ModelLoader.setCustomModelResourceLocation(xpFuel, 0, getModelResourceLocation(xpFuel))
-            ModelLoader.setCustomModelResourceLocation(xpFuelAdv, 0, getModelResourceLocation(xpFuelAdv))
-            //ItemBlockのRender登録
-            ModelLoader.setCustomModelResourceLocation(xpCobbleStone.getItemBlock(), 0, getModelResourceLocation(xpCobbleStone))
-            ModelLoader.setCustomModelResourceLocation(xpStone.getItemBlock(), 0, getModelResourceLocation(xpStone))
-            ModelLoader.setCustomModelResourceLocation(xpMachineBasic.getItemBlock(), 0, getModelResourceLocation(xpMachineBasic))
-            ModelLoader.setCustomModelResourceLocation(xpGlass.getItemBlock(), 0, getModelResourceLocation(xpGlass))
-            ModelLoader.setCustomModelResourceLocation(xpGlassPane.getItemBlock(), 0, getModelResourceLocation(xpGlassPane))
-            ModelLoader.setCustomModelResourceLocation(xpWoodPlank.getItemBlock(), 0, getModelResourceLocation(xpWoodPlank))
-            ModelLoader.setCustomModelResourceLocation(xpChest.getItemBlock(), 0, getModelResourceLocation(xpChest))
-            ModelLoader.setCustomModelResourceLocation(xpFuelBlock.getItemBlock(), 0, getModelResourceLocation(xpFuelBlock))
-            ModelLoader.setCustomModelResourceLocation(xpCollector.getItemBlock(), 0, getModelResourceLocation(xpCollector))
-            /*(0..3).forEach {
-                ModelLoader.setCustomModelResourceLocation(xpStoneBrick.getItemBlock(), it, ModelResourceLocation(ResourceLocation(MOD_ID, "xp_stone_brick_${BlockStoneBrick.EnumType.byMetadata(it).unlocalizedName}"), "inventory"))
-            }*/
-        }
+    @SubscribeEvent
+    @Suppress("UNUSED")
+    fun registerItems(event: RegistryEvent.Register<Item>) {
+        val registry = event.registry
+        //register items
+        registry.registerAll(
+                solidXp,
+                xpIron, xpDiamond, xpCoal, xpFuel, xpFuelAdv,
+                xpExtractor, xpChecker,
+                xpIronShovel, xpIronPickaxe, xpIronAxe, xpIronHoe, xpIronSword,
+                xpDiamondShovel, xpDiamondPickaxe, xpDiamondAxe, xpDiamondHoe, xpDiamondSword)
+        //register item blocks
+        registry.registerAll(
+                xpInfuserIB,
+                xpCollector.initItemBlock(), xpChest.initItemBlock(), xpCobbleStone.initItemBlock(), xpStone.initItemBlock(),
+                xpMachineBasic.initItemBlock(), xpGlass.initItemBlock(), xpGlassPane.initItemBlock(), xpWoodPlank.initItemBlock(),
+                xpFuelBlock.initItemBlock())
+    }
 
+    @SubscribeEvent
+    @Suppress("UNUSED")
+    fun registerBlocks(event: Register<Block>) {
+        event.registry.registerAll(
+                xpInfuser, xpCollector, xpChest,
+                xpCobbleStone, xpStone, xpMachineBasic, xpGlass, xpGlassPane, xpWoodPlank, xpFuelBlock
+        )
+    }
+
+    @SideOnly(CLIENT)
+    @SubscribeEvent
+    @Suppress("UNUSED")
+    fun registerModels(event: ModelRegistryEvent) {
+        //ItemのRender登録
+        ModelLoader.setCustomModelResourceLocation(xpIron, 0, getModelResourceLocation(xpIron))
+        ModelLoader.setCustomModelResourceLocation(xpDiamond, 0, getModelResourceLocation(xpDiamond))
+        (0..15).forEach {
+            ModelLoader.setCustomModelResourceLocation(solidXp, it, ModelResourceLocation(ResourceLocation(MOD_ID, "solidxp_$it"), "inventory"))
+        }
+        (0..15).forEach {
+            ModelLoader.setCustomModelResourceLocation(xpExtractor, it, getModelResourceLocation(xpExtractor))
+        }
+        ModelLoader.setCustomModelResourceLocation(xpChecker, 0, getModelResourceLocation(xpChecker))
+        ModelLoader.setCustomModelResourceLocation(xpIronAxe, 0, getModelResourceLocation(xpIronAxe))
+        ModelLoader.setCustomModelResourceLocation(xpIronPickaxe, 0, getModelResourceLocation(xpIronPickaxe))
+        ModelLoader.setCustomModelResourceLocation(xpIronShovel, 0, getModelResourceLocation(xpIronShovel))
+        ModelLoader.setCustomModelResourceLocation(xpIronHoe, 0, getModelResourceLocation(xpIronHoe))
+        ModelLoader.setCustomModelResourceLocation(xpIronSword, 0, getModelResourceLocation(xpIronSword))
+        ModelLoader.setCustomModelResourceLocation(xpDiamondShovel, 0, getModelResourceLocation(xpDiamondShovel))
+        ModelLoader.setCustomModelResourceLocation(xpDiamondPickaxe, 0, getModelResourceLocation(xpDiamondPickaxe))
+        ModelLoader.setCustomModelResourceLocation(xpDiamondAxe, 0, getModelResourceLocation(xpDiamondAxe))
+        ModelLoader.setCustomModelResourceLocation(xpDiamondHoe, 0, getModelResourceLocation(xpDiamondHoe))
+        ModelLoader.setCustomModelResourceLocation(xpDiamondSword, 0, getModelResourceLocation(xpDiamondSword))
+        ModelLoader.setCustomModelResourceLocation(xpInfuserIB, 0, getModelResourceLocation(xpInfuserIB))
+        ModelLoader.setCustomModelResourceLocation(xpCoal, 0, getModelResourceLocation(xpCoal))
+        ModelLoader.setCustomModelResourceLocation(xpFuel, 0, getModelResourceLocation(xpFuel))
+        ModelLoader.setCustomModelResourceLocation(xpFuelAdv, 0, getModelResourceLocation(xpFuelAdv))
+        //ItemBlockのRender登録
+        ModelLoader.setCustomModelResourceLocation(xpCobbleStone.getItemBlock(), 0, getModelResourceLocation(xpCobbleStone))
+        ModelLoader.setCustomModelResourceLocation(xpStone.getItemBlock(), 0, getModelResourceLocation(xpStone))
+        ModelLoader.setCustomModelResourceLocation(xpMachineBasic.getItemBlock(), 0, getModelResourceLocation(xpMachineBasic))
+        ModelLoader.setCustomModelResourceLocation(xpGlass.getItemBlock(), 0, getModelResourceLocation(xpGlass))
+        ModelLoader.setCustomModelResourceLocation(xpGlassPane.getItemBlock(), 0, getModelResourceLocation(xpGlassPane))
+        ModelLoader.setCustomModelResourceLocation(xpWoodPlank.getItemBlock(), 0, getModelResourceLocation(xpWoodPlank))
+        ModelLoader.setCustomModelResourceLocation(xpChest.getItemBlock(), 0, getModelResourceLocation(xpChest))
+        ModelLoader.setCustomModelResourceLocation(xpFuelBlock.getItemBlock(), 0, getModelResourceLocation(xpFuelBlock))
+        ModelLoader.setCustomModelResourceLocation(xpCollector.getItemBlock(), 0, getModelResourceLocation(xpCollector))
+    }
+
+    @SubscribeEvent
+    @Suppress("UNUSED")
+    fun registerRecipes(event: Register<IRecipe>): Unit {
+        val registry = event.registry
+        (0 until 15).forEach {
+            val itemStack = ItemStack(solidXp, 1, it)
+            registry.register(ShapelessOreRecipe(solidXp.registryName, ItemStack(solidXp, 1, it + 1), itemStack.copy(), itemStack.copy(), itemStack.copy(), itemStack.copy()).setRegistryName("${solidXp.registryName.toString()}_$it"))
+        }
+        (1..15).forEach {
+            val out = ItemStack(solidXp, 4, it - 1)
+            val id = ResourceLocation("${out.item.registryName.toString()}_down_$it")
+            registry.register(ShapelessOreRecipe(id, out, ItemStack(solidXp, 1, it)).setRegistryName(id))
+        }
+        registry.registerAll(
+                getRecipe(ItemStack(xpIron), " S ", "SIS", " S ", 'S', ItemStack(solidXp, 1, 2), 'I', Items.IRON_INGOT),
+                getRecipe(xpIronShovel.getEnchanted(), " I ", " S ", " S ", 'I', xpIron, 'S', Items.STICK),
+                getRecipe(xpIronPickaxe.getEnchanted(), "III", " S ", " S ", 'I', xpIron, 'S', Items.STICK),
+                getRecipe(xpIronAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpIron, 'S', Items.STICK),
+                getRecipe(xpIronHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpIron, 'S', Items.STICK),
+                getRecipe(xpIronSword.getEnchanted(), " I ", " I ", " S ", 'I', xpIron, 'S', Items.STICK),
+                getRecipe(xpDiamondShovel.getEnchanted(), " I ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK),
+                getRecipe(xpDiamondPickaxe.getEnchanted(), "III", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK),
+                getRecipe(xpDiamondAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpDiamond, 'S', Items.STICK),
+                getRecipe(xpDiamondHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK),
+                getRecipe(xpDiamondSword.getEnchanted(), " I ", " I ", " S ", 'I', xpDiamond, 'S', Items.STICK),
+                getRecipe(ItemStack(xpMachineBasic), "III", "I I", "III", 'I', xpIron),
+                getRecipe(ItemStack(xpExtractor), "III", "GRG", "D D", 'I', Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'D', Items.DIAMOND),
+                getRecipe(ItemStack(xpInfuser), "III", "RMR", "EEE", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'M', xpMachineBasic, 'E', xpIron),
+                getRecipe(ItemStack(xpChest), "WWW", "W W", "WWW", 'W', xpWoodPlank),
+                getRecipe(ItemStack(xpGlassPane, 16), "GGG", "GGG", 'G', xpGlass),
+                getShapelessRecipe(ItemStack(xpFuel), xpCoal, xpCoal, xpCoal, xpCoal),
+                getShapelessRecipe(ItemStack(xpFuelAdv), xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel),
+                getShapelessRecipe(ItemStack(xpFuelBlock), xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv)
+        )
+    }
+
+    @SubscribeEvent
+    @Suppress("UNUSED")
+    fun registerEnchants(event: Register<Enchantment>): Unit {
+        event.registry.registerAll(*xpBoost.values.toTypedArray())
+    }
+
+    fun handlePreInit(event: FMLPreInitializationEvent) {
         //Capabilityの登録
-        CapabilityManager.INSTANCE.register(IXpStorage::class.java,
+        INSTANCE.register(IXpStorage::class.java,
                 object : IStorage<IXpStorage> {
                     override fun readNBT(capability: Capability<IXpStorage>, instance: IXpStorage, side: EnumFacing?, nbt: NBTBase?) {
                         val tag = nbt as? NBTTagCompound ?: return
@@ -259,44 +354,16 @@ object SolidXpRegistry {
                     }
                 }
         ) { XpStorage() }
+
+        //レシピの登録
+
     }
 
     fun handleInit(event: FMLInitializationEvent) {
-        //レシピの登録
-        GameRegistry.addRecipe(ItemStack(xpIron), " S ", "SIS", " S ", 'S', ItemStack(solidXp, 1, 2), 'I', Items.IRON_INGOT)
-        (0 until 15).forEach {
-            val itemStack = ItemStack(solidXp, 1, it)
-            GameRegistry.addShapelessRecipe(ItemStack(solidXp, 1, it + 1), itemStack.copy(), itemStack.copy(), itemStack.copy(), itemStack.copy())
-        }
-        (1..15).forEach {
-            GameRegistry.addShapelessRecipe(ItemStack(solidXp, 4, it - 1), ItemStack(solidXp, 1, it))
-        }
-        GameRegistry.addRecipe(xpIronShovel.getEnchanted(), " I ", " S ", " S ", 'I', xpIron, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpIronPickaxe.getEnchanted(), "III", " S ", " S ", 'I', xpIron, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpIronAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpIron, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpIronHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpIron, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpIronSword.getEnchanted(), " I ", " I ", " S ", 'I', xpIron, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpDiamondShovel.getEnchanted(), " I ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpDiamondPickaxe.getEnchanted(), "III", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpDiamondAxe.getEnchanted(), "II ", "IS ", " S ", 'I', xpDiamond, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpDiamondHoe.getEnchanted(), "II ", " S ", " S ", 'I', xpDiamond, 'S', Items.STICK)
-        GameRegistry.addRecipe(xpDiamondSword.getEnchanted(), " I ", " I ", " S ", 'I', xpDiamond, 'S', Items.STICK)
-        GameRegistry.addRecipe(ItemStack(xpMachineBasic), "III", "I I", "III", 'I', xpIron)
-        GameRegistry.addRecipe(ItemStack(xpExtractor), "III", "GRG", "D D", 'I', Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'D', Items.DIAMOND)
-        GameRegistry.addRecipe(ItemStack(xpInfuser), "III", "RMR", "EEE", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'M', xpMachineBasic, 'E', xpIron)
-        GameRegistry.addRecipe(ItemStack(xpChest), "WWW", "W W", "WWW", 'W', xpWoodPlank)
-        GameRegistry.addRecipe(ItemStack(xpGlassPane, 16), "GGG", "GGG", 'G', xpGlass)
-        GameRegistry.addShapelessRecipe(ItemStack(xpFuel), xpCoal, xpCoal, xpCoal, xpCoal)
-        GameRegistry.addShapelessRecipe(ItemStack(xpFuelAdv), xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel, xpFuel)
-        GameRegistry.addShapelessRecipe(ItemStack(xpFuelBlock), xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv, xpFuelAdv)
         //製錬レシピの登録
         GameRegistry.addSmelting(xpCobbleStone, ItemStack(xpStone), 0f)
         //FuelHandlerの登録
         GameRegistry.registerFuelHandler(fuelHandler)
-        //Enchantの登録
-        xpBoost.forEach {
-            GameRegistry.register(it.value)
-        }
         //TileEntityの登録
         GameRegistry.registerTileEntity(TileXpInfuser::class.java, ResourceLocation(MOD_ID, "xpInfuser").toString())
         GameRegistry.registerTileEntity(TileXpChest::class.java, ResourceLocation(MOD_ID, "xpChest").toString())
@@ -304,7 +371,7 @@ object SolidXpRegistry {
         //Eventの登録
         MinecraftForge.EVENT_BUS.register(XpBoostEventHandler())
         //実績の登録
-        AchievementPage.registerAchievementPage(achievementPageSolidXp)
+        //AchievementPage.registerAchievementPage(achievementPageSolidXp)
         //GUI Handlerの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(SolidXpCore.INSTANCE, SolidXpGuiHandler())
 
@@ -320,5 +387,15 @@ object SolidXpRegistry {
 
     private fun getModelResourceLocation(block: Block): ModelResourceLocation {
         return getModelResourceLocation(block.getItemBlock())
+    }
+
+    private fun getRecipe(output: ItemStack, vararg recipeComponents: Any): IRecipe {
+        val recipe = ShapedOreRecipe(output.item.registryName, output, *recipeComponents).setRegistryName(output.item.registryName)
+        return recipe
+    }
+
+    private fun getShapelessRecipe(output: ItemStack, vararg recipeComponents: Any): IRecipe {
+        val recipe = ShapelessOreRecipe(output.item.registryName, output, *recipeComponents).setRegistryName(output.item.registryName)
+        return recipe
     }
 }

@@ -3,6 +3,7 @@ package c6h2cl2.solidxp.item
 import c6h2cl2.solidxp.SOLIDXP_TEXT
 import c6h2cl2.solidxp.*
 import c6h2cl2.solidxp.SolidXpRegistry
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -13,6 +14,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TextComponentTranslation
 import net.minecraft.world.World
 import net.minecraftforge.items.ItemHandlerHelper
+import javax.annotation.Nullable
 
 /**
  * @author C6H2Cl2
@@ -42,13 +44,13 @@ class ItemXpExtractor : Item() {
             } else {
                 player.extractExperience(xp.toInt())
                 ItemHandlerHelper.giveItemToPlayer(player, ItemStack(SolidXpRegistry.solidXp, 1, meta))
-                player.addStat(SolidXpRegistry.achievementExtractXp)
+                //player.addStat(SolidXpRegistry.achievementExtractXp)
                 return ActionResult.newResult(SUCCESS, itemStack)
             }
         }
     }
 
-    override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+    override fun addInformation(stack: ItemStack?, @Nullable world: World?, tooltip: MutableList<String>, advanced: ITooltipFlag) {
         tooltip.add("Right click to extract your experience")
         tooltip.add("Shift-RightClick to change xp value")
     }

@@ -46,7 +46,7 @@ class BlockXpInfuser : BlockXpMachineBase<TileXpInfuser>(Material.ROCK, TileXpIn
 
     override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) {
         if (placer is EntityPlayer)
-            placer.addStat(SolidXpRegistry.achievementPutXpInfuser)
+            //placer.addStat(SolidXpRegistry.achievementPutXpInfuser)
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.horizontalFacing.opposite), 2)
     }
 

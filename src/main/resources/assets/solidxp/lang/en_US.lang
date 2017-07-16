@@ -66,16 +66,16 @@ solidxp.text.not_enough_xp=You don't have enough Xp!
 solidxp.text.player_xp=Player Xp
 
 # Achievements
-achievement.solidxp.extractXp=Extract your Experience
-achievement.solidxp.extractXp.desc=Use Xp Extractor
-achievement.solidxp.craftXpIronPickaxe=Enhance your Experience
-achievement.solidxp.craftXpIronPickaxe.desc=Craft XpIron Pickaxe
-achievement.solidxp.craftXpIronHoe=The experience of Farming
-achievement.solidxp.craftXpIronHoe.desc=Craft XpIron Hoe
-achievement.solidxp.craftXpIronSword=kill enemy forever
-achievement.solidxp.craftXpIronSword.desc=Craft XpIron Sword
-achievement.solidxp.putXpInfuser=The begin of Xp-Technology
-achievement.solidxp.putXpInfuser.desc=Put Xp Infuser
+solidxp.advancement.extractXp=Extract your Experience
+solidxp.advancement.extractXp.desc=Use Xp Extractor
+solidxp.advancement.craftXpIronPickaxe=Enhance your Experience
+solidxp.advancement.craftXpIronPickaxe.desc=Craft XpIron Pickaxe
+solidxp.advancement.craftXpIronHoe=The experience of Farming
+solidxp.advancement.craftXpIronHoe.desc=Craft XpIron Hoe
+solidxp.advancement.craftXpIronSword=kill enemy forever
+solidxp.advancement.craftXpIronSword.desc=Craft XpIron Sword
+solidxp.advancement.putXpInfuser=The begin of Xp-Technology
+solidxp.advancement.putXpInfuser.desc=Put Xp Infuser
 
 # JEI
 solidxp.jei.xp_infusing=Xp Infusing

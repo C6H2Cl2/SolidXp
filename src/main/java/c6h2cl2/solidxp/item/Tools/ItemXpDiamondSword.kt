@@ -27,8 +27,11 @@ class ItemXpDiamondSword : ItemSword(SolidXpRegistry.materialXpDiamond), ICraftR
         hasSubtypes = true
     }
 
-    override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
-        val itemStack = ItemStack(itemIn)
+    override fun getSubItems(tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
+        if (tab != SolidXpRegistry.tabSolidXp){
+            return
+        }
+        val itemStack = ItemStack(this)
         itemStack.addEnchantment(Enchantments.MENDING, 3)
         itemStack.addEnchantment(SolidXpRegistry.xpBoost[WEAPON], 5)
         subItems.add(itemStack)
@@ -37,7 +40,7 @@ class ItemXpDiamondSword : ItemSword(SolidXpRegistry.materialXpDiamond), ICraftR
     override fun onCreated(stack: ItemStack, worldIn: World?, playerIn: EntityPlayer?) {
         stack.addEnchantment(Enchantments.MENDING, 3)
         stack.addEnchantment(SolidXpRegistry.xpBoost[WEAPON], 5)
-        playerIn?.addStat(SolidXpRegistry.achievementCraftXpIronSword)
+        //playerIn?.addStat(SolidXpRegistry.achievementCraftXpIronSword)
     }
 
     override fun getEnchanted(): ItemStack {

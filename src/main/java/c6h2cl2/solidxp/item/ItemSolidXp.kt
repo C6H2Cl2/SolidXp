@@ -24,9 +24,12 @@ class ItemSolidXp : Item() {
         hasSubtypes = true
     }
 
-    override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
-        (0..15).mapTo(subItems) { ItemStack(itemIn, 1, it) }
+    override fun getSubItems(tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
+        if (tab == SolidXpRegistry.tabSolidXp){
+            (0..15).mapTo(subItems) { ItemStack(this, 1, it) }
+        }
     }
+
 
     override fun getUnlocalizedName(stack: ItemStack?): String {
         return "item.solidxp_${stack?.metadata}"

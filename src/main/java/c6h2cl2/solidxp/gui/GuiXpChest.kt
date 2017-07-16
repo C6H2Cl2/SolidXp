@@ -21,7 +21,7 @@ class GuiXpChest(world: World, pos: BlockPos, playerInventory: InventoryPlayer) 
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         val s = TextComponentTranslation("$MOD_ID.gui.xp_chest").formattedText
-        fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, -4, Color.BLACK.rgb)
+        fontRenderer.drawString(s, xSize / 2 - fontRenderer.getStringWidth(s) / 2, -4, Color.BLACK.rgb)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {

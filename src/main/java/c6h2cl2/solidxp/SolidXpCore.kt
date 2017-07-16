@@ -1,6 +1,7 @@
 package c6h2cl2.solidxp
 
 import c6h2cl2.solidxp.proxy.CommonProxy
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -10,12 +11,13 @@ import net.minecraftforge.fml.common.ModMetadata
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File
 
 /**
  * @author C6H2Cl2
  */
-@Mod(modid = MOD_ID, name = MOD_NAME, version = VERSION, useMetadata = true, acceptedMinecraftVersions = "1.11.2")
+@Mod(modid = MOD_ID, name = MOD_NAME, version = VERSION, useMetadata = true, acceptedMinecraftVersions = "1.11.2", dependencies = "required-after:yukarilib@[1.2,)")
 class SolidXpCore {
 
     companion object {
@@ -36,6 +38,7 @@ class SolidXpCore {
         PacketHandler.init()
         loadMeta()
         getConfig()
+        MinecraftForge.EVENT_BUS.register(SolidXpRegistry)
     }
 
     @EventHandler

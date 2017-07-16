@@ -33,19 +33,19 @@ class XpInfusingRecipe(val input: ItemStack, val output: ItemStack, val xpValue:
 
     private fun drawRepairCost(minecraft: Minecraft, text: String, mainColor: Int, recipeWidth: Int) {
         val shadowColor = 0xFF000000.toInt() or (mainColor and 0xFCFCFC shr 2)
-        val width = minecraft.fontRendererObj.getStringWidth(text)
+        val width = minecraft.fontRenderer.getStringWidth(text)
         val x = recipeWidth / 2 - 18 - width / 2
         val y = 55
 
-        if (minecraft.fontRendererObj.unicodeFlag) {
+        if (minecraft.fontRenderer.unicodeFlag) {
             Gui.drawRect(x - 2, y - 2, x + width + 2, y + 10, 0xFF000000.toInt())
             Gui.drawRect(x - 1, y - 1, x + width + 1, y + 9, 0xFF3B3B3B.toInt())
         } else {
-            minecraft.fontRendererObj.drawString(text, x + 1, y, shadowColor)
-            minecraft.fontRendererObj.drawString(text, x, y + 1, shadowColor)
-            minecraft.fontRendererObj.drawString(text, x + 1, y + 1, shadowColor)
+            minecraft.fontRenderer.drawString(text, x + 1, y, shadowColor)
+            minecraft.fontRenderer.drawString(text, x, y + 1, shadowColor)
+            minecraft.fontRenderer.drawString(text, x + 1, y + 1, shadowColor)
         }
 
-        minecraft.fontRendererObj.drawString(text, x, y, mainColor)
+        minecraft.fontRenderer.drawString(text, x, y, mainColor)
     }
 }

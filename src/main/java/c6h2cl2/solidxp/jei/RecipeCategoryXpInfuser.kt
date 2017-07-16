@@ -15,6 +15,10 @@ import net.minecraft.util.ResourceLocation
  * @author C6H2Cl2
  */
 class RecipeCategoryXpInfuser(private val guiHelper: IGuiHelper): BlankRecipeCategory<XpInfusingRecipe>() {
+    override fun getModName(): String {
+        return MOD_NAME
+    }
+
     private val texture = ResourceLocation(MOD_ID, "textures/gui/xp_infuser.png")
     private val background = guiHelper.createDrawable(texture, 4, 4, 168, 78, 0, 30, 0, 25)!!
     private val xpBar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(texture, 177, 0, 4, 52 ), 40, BOTTOM, false)

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
  */
 class MessageHandlerUpdateTileEntity: IMessageHandler<CMessageUpdateTileEntity, IMessage> {
     override fun onMessage(message: CMessageUpdateTileEntity, ctx: MessageContext): IMessage? {
-        val tile = ctx.serverHandler.playerEntity.world.getTileEntity(message.pos)
+        val tile = ctx.serverHandler.player.world.getTileEntity(message.pos)
         tile?.readFromNBT(message.data)
         return null
     }

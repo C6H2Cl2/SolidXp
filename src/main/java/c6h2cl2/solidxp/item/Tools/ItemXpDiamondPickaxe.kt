@@ -27,8 +27,11 @@ class ItemXpDiamondPickaxe: ItemPickaxe(SolidXpRegistry.materialXpDiamond), ICra
         hasSubtypes = true
     }
 
-    override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
-        val itemStack = ItemStack(itemIn)
+    override fun getSubItems(tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
+        if (tab != SolidXpRegistry.tabSolidXp){
+            return
+        }
+        val itemStack = ItemStack(this)
         itemStack.addEnchantment(Enchantments.MENDING, 3)
         itemStack.addEnchantment(SolidXpRegistry.xpBoost[DIGGER], 5)
         subItems.add(itemStack)

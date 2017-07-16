@@ -27,8 +27,11 @@ class ItemXpIronAxe : ItemAxe(SolidXpRegistry.materialXpIron, 8.0f, -3.1f), ICra
         hasSubtypes = true
     }
 
-    override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
-        val itemStack = ItemStack(itemIn, 1, 0)
+    override fun getSubItems(tab: CreativeTabs?, subItems: NonNullList<ItemStack>) {
+        if (tab != SolidXpRegistry.tabSolidXp){
+            return
+        }
+        val itemStack = ItemStack(this, 1, 0)
         itemStack.addEnchantment(Enchantments.MENDING, 1)
         itemStack.addEnchantment(SolidXpRegistry.xpBoost[DIGGER], 2)
         subItems.add(itemStack)

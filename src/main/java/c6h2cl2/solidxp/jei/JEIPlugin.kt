@@ -8,6 +8,9 @@ import mezz.jei.api.IModRegistry
 import mezz.jei.api.ISubtypeRegistry
 import mezz.jei.api.JEIPlugin
 import mezz.jei.api.ingredients.IModIngredientRegistration
+import mezz.jei.api.recipe.IRecipeCategoryRegistration
+import mezz.jei.api.recipe.IRecipeWrapper
+import mezz.jei.api.recipe.IRecipeWrapperFactory
 import net.minecraft.item.ItemStack
 
 /**
@@ -16,14 +19,17 @@ import net.minecraft.item.ItemStack
 
 @JEIPlugin
 class JEIPlugin : IModPlugin{
+    override fun registerCategories(registry: IRecipeCategoryRegistration) {
+        registry.addRecipeCategories(RecipeCategoryXpInfuser(registry.jeiHelpers.guiHelper))
+
+    }
 
     override fun register(registry: IModRegistry) {
-        registry.addRecipeCategories(RecipeCategoryXpInfuser(registry.jeiHelpers.guiHelper))
-        registry.addRecipeHandlers(XpInfusingRecipeHandler())
-        registry.addRecipeCategoryCraftingItem(ItemStack(SolidXpRegistry.xpInfuser), XP_INFUSING_RECIPE_UID)
+        registry.handleRecipes<XpInfusingRecipe>(XpInfusingRecipe::class.java, { recipe -> recipe }, XP_INFUSING_RECIPE_UID)
+        registry.addRecipeCatalyst(ItemStack(SolidXpRegistry.xpInfuser), XP_INFUSING_RECIPE_UID)
         //Register Xp Infusing Recipe
         val xpInfusingRecipes = RecipeRegistry.getXpInfusingRecipe()
-        registry.addRecipes(xpInfusingRecipes.map { XpInfusingRecipe(it.material, it.output, it.xp) })
+        registry.addRecipes(xpInfusingRecipes.map { XpInfusingRecipe(it.material, it.output, it.xp) }, XP_INFUSING_RECIPE_UID)
     }
 
 
